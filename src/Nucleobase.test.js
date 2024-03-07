@@ -58,4 +58,22 @@ describe('Nucleobase class', () => {
 
     expect(centerPoint).toStrictEqual({ x: 4781.327, y: 0.3718 });
   });
+
+  test('centerClientPoint getter', () => {
+    let text = { node: { getBoundingClientRect: () => ({ left: 316, right: 352, top: 601, bottom: 624 }) } };
+
+    let b = new Nucleobase({ text });
+
+    expect(b.centerClientPoint.x).toBeCloseTo((316 + 352) / 2);
+    expect(b.centerClientPoint.y).toBeCloseTo((601 + 624) / 2);
+  });
+
+  test('getCenterClientPoint method', () => {
+    let text = { node: { getBoundingClientRect: () => ({ left: -58, right: -41, top: 211, bottom: 230 }) } };
+
+    let b = new Nucleobase({ text });
+
+    expect(b.getCenterClientPoint().x).toBeCloseTo(((-58) + (-41)) / 2);
+    expect(b.getCenterClientPoint().y).toBeCloseTo((211 + 230) / 2);
+  });
 });
