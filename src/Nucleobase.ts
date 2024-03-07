@@ -12,4 +12,11 @@ export class Nucleobase {
   get text() {
     return this.props.text;
   }
+
+  /**
+   * The actual DOM node of the text element of this nucleobase.
+   */
+  get textDOMNode() {
+    return this.text.node;
+  }
 }
