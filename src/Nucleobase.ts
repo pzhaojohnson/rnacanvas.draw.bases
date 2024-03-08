@@ -38,6 +38,15 @@ export class Nucleobase {
   }
 
   /**
+   * Removes the nucleobase from its parent container element.
+   *
+   * (Has no effect if the nucleobase was not a child of another element to begin with.)
+   */
+  remove(): void {
+    this.text.remove();
+  }
+
+  /**
    * The center point of this nucleobase (in the coordinate system of its parent SVG document).
    *
    * Is the same as the center point of the text element of this nucleobase.

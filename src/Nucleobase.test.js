@@ -35,6 +35,18 @@ describe('Nucleobase class', () => {
     expect(ele).toBeTruthy();
   });
 
+  test('remove method', () => {
+    let text = { remove: jest.fn() };
+
+    let b = new Nucleobase({ text });
+
+    expect(text.remove).not.toHaveBeenCalled();
+
+    b.remove();
+
+    expect(text.remove).toHaveBeenCalledTimes(1);
+  });
+
   test('centerPoint getter', () => {
     let text = { bbox: () => ({ cx: 823.317, cy: -81246.3636 }) };
 
