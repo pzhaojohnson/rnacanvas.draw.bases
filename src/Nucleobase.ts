@@ -67,6 +67,16 @@ export class Nucleobase {
   }
 
   /**
+   * Returns true if the given node is a parent (or grandparent, great-grandparent, etc.)
+   * of the text element of this nucleobase.
+   *
+   * Returns false otherwise.
+   */
+  isIn(node: Node): boolean {
+    return node.contains(this.textDOMNode);
+  }
+
+  /**
    * The center point of this nucleobase (in the coordinate system of its parent SVG document).
    *
    * Is the same as the center point of the text element of this nucleobase.

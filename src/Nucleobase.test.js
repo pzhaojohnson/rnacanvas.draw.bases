@@ -80,6 +80,25 @@ describe('Nucleobase class', () => {
     expect(text.remove).toHaveBeenCalledTimes(1);
   });
 
+  test('isIn method', () => {
+    let textDOMNode = {};
+    let text = { node: textDOMNode };
+
+    let b = new Nucleobase({ text });
+
+    let node1 = {
+      contains: other => {
+        expect(other).toBeTruthy();
+        return other === textDOMNode;
+      },
+    };
+
+    let node2 = { contains: () => false };
+
+    expect(b.isIn(node1)).toBe(true);
+    expect(b.isIn(node2)).toBe(false);
+  });
+
   test('centerPoint getter', () => {
     let text = { bbox: () => ({ cx: 823.317, cy: -81246.3636 }) };
 
