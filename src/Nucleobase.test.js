@@ -19,6 +19,17 @@ describe('Nucleobase class', () => {
     expect(text.node).toBeTruthy();
   });
 
+  test('parent getter', () => {
+    let parent = {};
+
+    let text = { parent: () => parent };
+
+    let b = new Nucleobase({ text });
+
+    expect(b.parent).toBe(parent);
+    expect(parent).toBeTruthy();
+  });
+
   test('appendTo method', () => {
     let text = { addTo: jest.fn() };
 

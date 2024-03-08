@@ -31,6 +31,15 @@ export class Nucleobase {
   }
 
   /**
+   * The parent element containing this nucleobase.
+   *
+   * Will be nullish if this nucleobase is not a child of another element.
+   */
+  get parent() {
+    return this.text.parent();
+  }
+
+  /**
    * Appends the nucleobase to the SVG element.
    */
   appendTo(ele: SVG.Element): void {
