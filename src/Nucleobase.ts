@@ -31,6 +31,13 @@ export class Nucleobase {
   }
 
   /**
+   * Appends the nucleobase to the SVG element.
+   */
+  appendTo(ele: SVG.Element): void {
+    this.text.addTo(ele);
+  }
+
+  /**
    * The center point of this nucleobase (in the coordinate system of its parent SVG document).
    *
    * Is the same as the center point of the text element of this nucleobase.

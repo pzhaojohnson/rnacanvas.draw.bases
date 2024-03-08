@@ -19,6 +19,22 @@ describe('Nucleobase class', () => {
     expect(text.node).toBeTruthy();
   });
 
+  test('appendTo method', () => {
+    let text = { addTo: jest.fn() };
+
+    let b = new Nucleobase({ text });
+
+    let ele = {};
+
+    expect(text.addTo).not.toHaveBeenCalled();
+
+    b.appendTo(ele);
+
+    expect(text.addTo).toHaveBeenCalledTimes(1);
+    expect(text.addTo.mock.calls[0][0]).toBe(ele);
+    expect(ele).toBeTruthy();
+  });
+
   test('centerPoint getter', () => {
     let text = { bbox: () => ({ cx: 823.317, cy: -81246.3636 }) };
 
