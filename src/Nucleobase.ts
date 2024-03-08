@@ -40,6 +40,17 @@ export class Nucleobase {
   }
 
   /**
+   * The actual DOM node of the parent for this nucleobase.
+   *
+   * Will be nullish if this nucleobase has no parent.
+   */
+  get parentDOMNode() {
+    let parent = this.parent;
+
+    return parent ? parent.node : null;
+  }
+
+  /**
    * Appends the nucleobase to the SVG element.
    */
   appendTo(ele: SVG.Element): void {

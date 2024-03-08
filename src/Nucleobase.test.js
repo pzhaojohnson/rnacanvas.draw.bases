@@ -30,6 +30,28 @@ describe('Nucleobase class', () => {
     expect(parent).toBeTruthy();
   });
 
+  describe('parentDOMNode getter', () => {
+    test('when the nucleobase has a parent', () => {
+      let parentDOMNode = {};
+      let parent = { node: parentDOMNode };
+
+      let text = { parent: () => parent };
+
+      let b = new Nucleobase({ text });
+
+      expect(b.parentDOMNode).toBe(parentDOMNode);
+      expect(parentDOMNode).toBeTruthy();
+    });
+
+    test('when the nucleobase has no parent', () => {
+      let text = { parent: () => null };
+
+      let b = new Nucleobase({ text });
+
+      expect(b.parentDOMNode).toBe(null);
+    });
+  });
+
   test('appendTo method', () => {
     let text = { addTo: jest.fn() };
 
