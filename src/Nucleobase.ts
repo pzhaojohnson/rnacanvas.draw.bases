@@ -14,20 +14,16 @@ export type Point = {
  * A nucleobase in a two-dimensional nucleic acid structure drawing.
  */
 export class Nucleobase {
-  constructor(private props: { text: SVG.Text }) {}
+  /**
+   * @param textElement The text element for the nucleobase to wrap.
+   */
+  constructor(private textElement: SVG.Text) {}
 
   /**
-   * The text element of the nucleobase.
+   * The actual DOM node of the text element for this nucleobase.
    */
-  get text() {
-    return this.props.text;
-  }
-
-  /**
-   * The actual DOM node of the text element of this nucleobase.
-   */
-  get textDOMNode() {
-    return this.text.node;
+  get textElementDOMNode() {
+    return this.textElement.node;
   }
 
   /**
@@ -36,7 +32,7 @@ export class Nucleobase {
    * Will be nullish if this nucleobase is not a child of another element.
    */
   get parent() {
-    return this.text.parent();
+    return this.textElement.parent();
   }
 
   /**
@@ -54,7 +50,7 @@ export class Nucleobase {
    * Appends the nucleobase to the SVG element.
    */
   appendTo(ele: SVG.Element): void {
-    this.text.addTo(ele);
+    this.textElement.addTo(ele);
   }
 
   /**
@@ -63,7 +59,7 @@ export class Nucleobase {
    * (Has no effect if the nucleobase was not a child of another element to begin with.)
    */
   remove(): void {
-    this.text.remove();
+    this.textElement.remove();
   }
 
   /**
@@ -73,22 +69,22 @@ export class Nucleobase {
    * Returns false otherwise.
    */
   isIn(node: Node): boolean {
-    return node.contains(this.textDOMNode);
+    return node.contains(this.textElementDOMNode);
   }
 
   /**
    * The center point of this nucleobase (in the coordinate system of its parent SVG document).
    *
-   * Is the same as the center point of the text element of this nucleobase.
+   * Is the same as the center point of the text element for this nucleobase.
    */
   get centerPoint(): Point {
-    let { cx, cy } = this.text.bbox();
+    let { cx, cy } = this.textElement.bbox();
 
     return { x: cx, y: cy };
   }
 
   set centerPoint(p) {
-    this.text.center(p.x, p.y);
+    this.textElement.center(p.x, p.y);
   }
 
   getCenterPoint() {
@@ -103,14 +99,14 @@ export class Nucleobase {
    * The center point of this nucleobase in the client coordinate system
    * (i.e., the same coordinate system used by methods such as `getBoundingClientRect`).
    *
-   * Is the same as the center client point of the text element of this nucleobase.
+   * Is the same as the center client point of the text element for this nucleobase.
    */
   get centerClientPoint(): Point {
-    let textBoundingClientRect = this.textDOMNode.getBoundingClientRect();
+    let boundingClientRect = this.textElementDOMNode.getBoundingClientRect();
 
     return {
-      x: mean([textBoundingClientRect.left, textBoundingClientRect.right]),
-      y: mean([textBoundingClientRect.top, textBoundingClientRect.bottom]),
+      x: mean([boundingClientRect.left, boundingClientRect.right]),
+      y: mean([boundingClientRect.top, boundingClientRect.bottom]),
     };
   }
 
