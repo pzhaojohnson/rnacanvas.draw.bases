@@ -1,4 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Nucleobase } from './Nucleobase';
+
+import * as SVG from '@svgdotjs/svg.js';
 
 describe('Nucleobase class', () => {
   test('textElementDOMNode getter', () => {
@@ -8,6 +14,14 @@ describe('Nucleobase class', () => {
 
     expect(b.textElementDOMNode).toBe(textElement.node);
     expect(textElement.node).toBeTruthy();
+  });
+
+  test('textContent getter', () => {
+    let textElement = new SVG.Text();
+    textElement.node.textContent = 'Asmcvjiq 328rhf';
+
+    let b = new Nucleobase(textElement);
+    expect(b.textContent).toBe('Asmcvjiq 328rhf');
   });
 
   test('parent getter', () => {

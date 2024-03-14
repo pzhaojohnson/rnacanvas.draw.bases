@@ -27,6 +27,13 @@ export class Nucleobase {
   }
 
   /**
+   * The text content of the nucleobase.
+   */
+  get textContent(): string {
+    return this.textElement.text();
+  }
+
+  /**
    * The parent element containing this nucleobase.
    *
    * Will be nullish if this nucleobase is not a child of another element.
