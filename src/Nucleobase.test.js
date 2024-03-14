@@ -41,6 +41,19 @@ describe('Nucleobase class', () => {
     expect(b.id).toBe('text-element-281497847814');
   });
 
+  test('assignUUID method', () => {
+    let textElement = new SVG.Text();
+
+    let b = new Nucleobase(textElement);
+    expect(b.id).toBeFalsy();
+
+    b.assignUUID();
+    expect(b.id.length).toBeGreaterThanOrEqual(36);
+
+    // must start with a letter (per the rules for SVG element IDs)
+    expect(b.id.charAt(0)).toMatch(/[A-Za-z]/);
+  });
+
   test('parent getter', () => {
     let parent = {};
 

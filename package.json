@@ -1,6 +1,6 @@
 {
   "name": "@rnacanvas/draw.bases",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Draw nucleobases",
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@rnacanvas/draw.svg": "^1.4.0",
     "@rnacanvas/math": "^1.15.0",
     "@svgdotjs/svg.js": "^3.2.0"
   }

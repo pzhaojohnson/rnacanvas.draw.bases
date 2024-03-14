@@ -1,5 +1,7 @@
 import * as SVG from '@svgdotjs/svg.js';
 
+import { assignUUID } from '@rnacanvas/draw.svg';
+
 import { mean } from '@rnacanvas/math';
 
 /**
@@ -42,6 +44,15 @@ export class Nucleobase {
    */
   get id() {
     return this.textElementDOMNode.getAttribute('id');
+  }
+
+  /**
+   * Assigns a UUID to this nucleobase.
+   *
+   * (Overwrites any preexisting ID that this nucleobase had.)
+   */
+  assignUUID(): void {
+    assignUUID(this.textElement);
   }
 
   /**
