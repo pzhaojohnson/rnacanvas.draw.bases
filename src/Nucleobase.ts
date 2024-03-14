@@ -38,6 +38,13 @@ export class Nucleobase {
   }
 
   /**
+   * The `id` attribute of the text element of the nucleobase.
+   */
+  get id() {
+    return this.textElementDOMNode.getAttribute('id');
+  }
+
+  /**
    * The parent element containing this nucleobase.
    *
    * Will be nullish if this nucleobase is not a child of another element.
