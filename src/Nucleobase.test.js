@@ -7,6 +7,22 @@ import { Nucleobase } from './Nucleobase';
 import * as SVG from '@svgdotjs/svg.js';
 
 describe('Nucleobase class', () => {
+  describe('create static method', () => {
+    it('creates a nucleobase with the given text content', () => {
+      let b = Nucleobase.create('aaCJOE_3819jdijf');
+      expect(b.textContent).toBe('aaCJOE_3819jdijf');
+    });
+
+    /**
+     * All nucleobases must have a unique ID to be recreatable
+     * (when reopening a saved drawing, for instance).
+     */
+    it('assigns a UUID to the newly created nucleobase', () => {
+      let b = Nucleobase.create('A');
+      expect(b.id.length).toBeGreaterThanOrEqual(36);
+    });
+  });
+
   test('textElementDOMNode getter', () => {
     let textElement = { node: {} };
 

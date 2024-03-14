@@ -17,6 +17,22 @@ export type Point = {
  */
 export class Nucleobase {
   /**
+   * Creates a nucleobase with the given text content.
+   */
+  static create(textContent: string): Nucleobase {
+    let textElement = new SVG.Text();
+    textElement.node.textContent = textContent;
+
+    let b = new Nucleobase(textElement);
+
+    // all nucleobases must have a unique ID to be recreatable
+    // (when reopening a saved drawing, for instance)
+    b.assignUUID();
+
+    return b;
+  }
+
+  /**
    * @param textElement The text element for the nucleobase to wrap.
    */
   constructor(readonly textElement: SVG.Text) {}
