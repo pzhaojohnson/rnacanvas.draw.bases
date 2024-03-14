@@ -17,7 +17,7 @@ export class Nucleobase {
   /**
    * @param textElement The text element for the nucleobase to wrap.
    */
-  constructor(private textElement: SVG.Text) {}
+  constructor(readonly textElement: SVG.Text) {}
 
   /**
    * The actual DOM node of the text element for this nucleobase.
