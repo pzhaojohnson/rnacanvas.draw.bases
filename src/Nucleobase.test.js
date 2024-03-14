@@ -24,6 +24,15 @@ describe('Nucleobase class', () => {
     expect(b.textContent).toBe('Asmcvjiq 328rhf');
   });
 
+  test('textContent setter', () => {
+    let textElement = new SVG.Text();
+
+    let b = new Nucleobase(textElement);
+
+    b.textContent = 'd8238fDFJIWef ijsoifwe';
+    expect(textElement.text()).toBe('d8238fDFJIWef ijsoifwe');
+  });
+
   test('parent getter', () => {
     let parent = {};
 

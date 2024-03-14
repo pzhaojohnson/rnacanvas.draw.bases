@@ -33,6 +33,10 @@ export class Nucleobase {
     return this.textElement.text();
   }
 
+  set textContent(textContent) {
+    this.textElementDOMNode.textContent = textContent;
+  }
+
   /**
    * The parent element containing this nucleobase.
    *
