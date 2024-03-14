@@ -43,6 +43,8 @@ export class Nucleobase {
    * The `id` attribute of the text element of the nucleobase.
    */
   get id() {
+    // don't use the `id` method provided by the SVG.js library
+    // (since it will auto-initialize an ID for an SVG element if it did not already have one)
     return this.textElementDOMNode.getAttribute('id');
   }
 

@@ -33,12 +33,29 @@ describe('Nucleobase class', () => {
     expect(textElement.text()).toBe('d8238fDFJIWef ijsoifwe');
   });
 
-  test('id getter', () => {
-    let textElement = new SVG.Text();
-    textElement.attr('id', 'text-element-281497847814');
+  describe('id getter', () => {
+    it('returns the ID of the text element of the nucleobase', () => {
+      let textElement = new SVG.Text();
+      textElement.attr('id', 'text-element-281497847814');
 
-    let b = new Nucleobase(textElement);
-    expect(b.id).toBe('text-element-281497847814');
+      let b = new Nucleobase(textElement);
+      expect(b.id).toBe('text-element-281497847814');
+    });
+
+    /**
+     * Don't use the `id` method provided by the SVG.js library
+     * (since it will auto-initialize an ID for an SVG element if it did not have one already).
+     */
+    it('does not auto-initialize an ID for the nucleobase', () => {
+      let textElement = new SVG.Text();
+      expect(textElement.node.getAttribute('id')).toBe(null);
+
+      let b = new Nucleobase(textElement);
+      expect(b.id).toBe(null);
+
+      // check after using the `id` getter
+      expect(textElement.node.getAttribute('id')).toBe(null);
+    });
   });
 
   test('assignUUID method', () => {
