@@ -52,6 +52,13 @@ export class Nucleobase {
   }
 
   /**
+   * Set an attribute of the text element that is the nucleobase.
+   */
+  setAttribute(name: string, value: string): void {
+    this.domNode.setAttribute(name, value);
+  }
+
+  /**
    * The text content of the text element that is the nucleobase.
    */
   get textContent() {
