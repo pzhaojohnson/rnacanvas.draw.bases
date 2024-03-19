@@ -17,7 +17,26 @@ export type Point = {
  */
 export class Nucleobase {
   /**
-   * Creates a nucleobase with the given text content.
+   * Default attributes to create new nucleobases with.
+   */
+  static defaultAttributes = {
+    'font-family': 'Arial',
+    'font-size': '9',
+    'font-weight': '700',
+  };
+
+  /**
+   * Should match the keys of the default attributes object.
+   */
+  static defaultAttributeNames = [
+    'font-family',
+    'font-size',
+    'font-weight',
+  ] as const;
+
+  /**
+   * Creates a nucleobase with the given text content
+   * (and with default attributes).
    */
   static create(textContent: string): Nucleobase {
     let textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -29,10 +48,15 @@ export class Nucleobase {
     // (when reopening a saved drawing, for instance)
     b.assignUUID();
 
+    Nucleobase.defaultAttributeNames.forEach(name => b.setAttribute(name, Nucleobase.defaultAttributes[name]));
+
     return b;
   }
 
   /**
+   * Note that this constructor will not modify the input text element in any way
+   * (e.g., won't set attributes to default values).
+   *
    * @param textElement The text element that is the nucleobase.
    */
   constructor(private textElement: SVGTextElement) {}

@@ -40,6 +40,16 @@ describe('Nucleobase class', () => {
       let b = Nucleobase.create('A');
       expect(b.id.length).toBeGreaterThanOrEqual(36);
     });
+
+    it('assigns default attributes to the newly created nucleobase', () => {
+      Nucleobase.defaultAttributes['font-family'] = 'Comic Sans';
+      Nucleobase.defaultAttributes['font-size'] = '32.08725';
+
+      let b = Nucleobase.create('A');
+
+      expect(b.getAttribute('font-family')).toBe('Comic Sans');
+      expect(b.getAttribute('font-size')).toBe('32.08725');
+    });
   });
 
   test('domNode getter', () => {
