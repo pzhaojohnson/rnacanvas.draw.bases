@@ -6,6 +6,25 @@ import { Nucleobase } from './Nucleobase';
 
 import * as SVG from '@svgdotjs/svg.js';
 
+function createDOMRect(x, y, width, height) {
+  let top = y;
+  let right = x + width;
+  let bottom = y + height;
+  let left = x;
+
+  return { x, y, width, height, top, right, bottom, left };
+}
+
+function createSVGTextElement() {
+  let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+  if (!text.getBBox) {
+    text.getBBox = () => createDOMRect(0, 0, 0, 0);
+  }
+
+  return text;
+}
+
 describe('Nucleobase class', () => {
   describe('create static method', () => {
     it('creates a nucleobase with the given text content', () => {
@@ -23,59 +42,59 @@ describe('Nucleobase class', () => {
     });
   });
 
-  test('textElementDOMNode getter', () => {
-    let textElement = { node: {} };
+  test('domNode getter', () => {
+    let textElement = createSVGTextElement();
 
     let b = new Nucleobase(textElement);
 
-    expect(b.textElementDOMNode).toBe(textElement.node);
-    expect(textElement.node).toBeTruthy();
+    expect(b.domNode).toBe(textElement);
+    expect(textElement).toBeTruthy();
   });
 
   test('textContent getter', () => {
-    let textElement = new SVG.Text();
-    textElement.node.textContent = 'Asmcvjiq 328rhf';
+    let textElement = createSVGTextElement();
+    textElement.textContent = 'Asmcvjiq 328rhf';
 
     let b = new Nucleobase(textElement);
     expect(b.textContent).toBe('Asmcvjiq 328rhf');
   });
 
   test('textContent setter', () => {
-    let textElement = new SVG.Text();
+    let textElement = createSVGTextElement();
 
     let b = new Nucleobase(textElement);
 
     b.textContent = 'd8238fDFJIWef ijsoifwe';
-    expect(textElement.text()).toBe('d8238fDFJIWef ijsoifwe');
+    expect(textElement.textContent).toBe('d8238fDFJIWef ijsoifwe');
   });
 
   describe('id getter', () => {
-    it('returns the ID of the text element of the nucleobase', () => {
-      let textElement = new SVG.Text();
-      textElement.attr('id', 'text-element-281497847814');
+    it('returns the ID of the text element that is the nucleobase', () => {
+      let textElement = createSVGTextElement();
+      textElement.setAttribute('id', 'text-element-281497847814');
 
       let b = new Nucleobase(textElement);
       expect(b.id).toBe('text-element-281497847814');
     });
 
     /**
-     * Don't use the `id` method provided by the SVG.js library
-     * (since it will auto-initialize an ID for an SVG element if it did not have one already).
+     * Don't use the `id` method provided by the SVG.js library for SVG elements
+     * (since it will auto-initialize the IDs of SVG elements).
      */
     it('does not auto-initialize an ID for the nucleobase', () => {
-      let textElement = new SVG.Text();
-      expect(textElement.node.getAttribute('id')).toBe(null);
+      let textElement = createSVGTextElement();
+      expect(textElement.getAttribute('id')).toBeFalsy();
 
       let b = new Nucleobase(textElement);
-      expect(b.id).toBe(null);
+      expect(b.id).toBeFalsy();
 
-      // check after using the `id` getter
-      expect(textElement.node.getAttribute('id')).toBe(null);
+      // is still uninitialized
+      expect(textElement.getAttribute('id')).toBeFalsy();
     });
   });
 
   test('assignUUID method', () => {
-    let textElement = new SVG.Text();
+    let textElement = createSVGTextElement();
 
     let b = new Nucleobase(textElement);
     expect(b.id).toBeFalsy();
@@ -87,128 +106,104 @@ describe('Nucleobase class', () => {
     expect(b.id.charAt(0)).toMatch(/[A-Za-z]/);
   });
 
-  test('parent getter', () => {
-    let parent = {};
-
-    let textElement = { parent: () => parent };
-
-    let b = new Nucleobase(textElement);
-
-    expect(b.parent).toBe(parent);
-    expect(parent).toBeTruthy();
-  });
-
-  describe('parentDOMNode getter', () => {
-    test('when the nucleobase has a parent', () => {
-      let parentDOMNode = {};
-      let parent = { node: parentDOMNode };
-
-      let textElement = { parent: () => parent };
-
+  describe('appendTo method', () => {
+    it('appends the text element that is the nucleobase to the given container node', () => {
+      let textElement = createSVGTextElement();
       let b = new Nucleobase(textElement);
 
-      expect(b.parentDOMNode).toBe(parentDOMNode);
-      expect(parentDOMNode).toBeTruthy();
-    });
+      let container = (new SVG.Svg()).node;
 
-    test('when the nucleobase has no parent', () => {
-      let textElement = { parent: () => null };
+      // add some elements to append after
+      container.appendChild(createSVGTextElement());
+      container.appendChild(createSVGTextElement());
+      container.appendChild(createSVGTextElement());
+      container.appendChild(createSVGTextElement());
 
-      let b = new Nucleobase(textElement);
-
-      expect(b.parentDOMNode).toBe(null);
+      expect(container.contains(textElement)).toBeFalsy();
+      b.appendTo(container);
+      expect(container.childNodes[4]).toBe(textElement);
     });
   });
 
-  test('appendTo method', () => {
-    let textElement = { addTo: jest.fn() };
+  describe('remove method', () => {
+    it('removes the text element that is the nucleobase from any parent container node that it is in', () => {
+      let textElement = createSVGTextElement();
+      let b = new Nucleobase(textElement);
 
-    let b = new Nucleobase(textElement);
+      let container = (new SVG.Svg()).node;
+      b.appendTo(container);
 
-    let ele = {};
-
-    expect(textElement.addTo).not.toHaveBeenCalled();
-
-    b.appendTo(ele);
-
-    expect(textElement.addTo).toHaveBeenCalledTimes(1);
-    expect(textElement.addTo.mock.calls[0][0]).toBe(ele);
-    expect(ele).toBeTruthy();
-  });
-
-  test('remove method', () => {
-    let textElement = { remove: jest.fn() };
-
-    let b = new Nucleobase(textElement);
-
-    expect(textElement.remove).not.toHaveBeenCalled();
-
-    b.remove();
-
-    expect(textElement.remove).toHaveBeenCalledTimes(1);
+      expect(container.contains(textElement)).toBeTruthy();
+      b.remove();
+      expect(container.contains(textElement)).toBeFalsy();
+    });
   });
 
   test('isIn method', () => {
-    let textDOMNode = {};
-    let textElement = { node: textDOMNode };
-
+    let textElement = createSVGTextElement();
     let b = new Nucleobase(textElement);
 
-    let node1 = {
-      contains: other => {
-        expect(other).toBeTruthy();
-        return other === textDOMNode;
-      },
-    };
+    let container1 = (new SVG.Svg()).node;
+    let container2 = (new SVG.Svg()).node;
 
-    let node2 = { contains: () => false };
+    b.appendTo(container1);
 
-    expect(b.isIn(node1)).toBe(true);
-    expect(b.isIn(node2)).toBe(false);
+    expect(b.isIn(container1)).toBe(true);
+    expect(b.isIn(container2)).toBe(false);
+
+    // should return false for the nucleobase (text element) itself
+    // (cannot simply use the `contains` method of nodes and do nothing else)
+    expect(b.isIn(textElement)).toBe(false);
   });
 
   test('centerPoint getter', () => {
-    let textElement = { bbox: () => ({ cx: 823.317, cy: -81246.3636 }) };
+    let textElement = createSVGTextElement();
+    textElement.getBBox = () => createDOMRect(45, 82, 18, 33);
 
     let b = new Nucleobase(textElement);
 
-    expect(b.centerPoint).toStrictEqual({ x: 823.317, y: -81246.3636 });
+    expect(b.centerPoint.x).toBeCloseTo(54);
+    expect(b.centerPoint.y).toBeCloseTo(98.5);
   });
 
   test('centerPoint setter', () => {
-    let centerPoint = null;
-
-    let textElement = { center: (x, y) => centerPoint = { x, y } };
+    let textElement = createSVGTextElement();
+    textElement.getBBox = () => createDOMRect(0, 0, 22.3, 84);
 
     let b = new Nucleobase(textElement);
 
     b.centerPoint = { x: -6471.387, y: 38197.332 };
 
-    expect(centerPoint).toStrictEqual({ x: -6471.387, y: 38197.332 });
+    expect(Number.parseFloat(b.domNode.getAttribute('x'))).toBeCloseTo(-6471.387 - (22.3 / 2));
+    expect(Number.parseFloat(b.domNode.getAttribute('y'))).toBeCloseTo(38197.332 - (84 / 2));
   });
 
   test('getCenterPoint method', () => {
-    let textElement = { bbox: () => ({ cx: 4282.31, cy: 7720.0271 }) };
+    let textElement = createSVGTextElement();
+
+    textElement.getBBox = () => createDOMRect(4282.31 - 4.5, 7720.0271 - 3.1, 9, 6.2);
 
     let b = new Nucleobase(textElement);
 
-    expect(b.getCenterPoint()).toStrictEqual({ x: 4282.31, y: 7720.0271 });
+    expect(b.getCenterPoint().x).toBeCloseTo(4282.31);
+    expect(b.getCenterPoint().y).toBeCloseTo(7720.0271);
   });
 
   test('setCenterPoint method', () => {
-    let centerPoint = null;
-
-    let textElement = { center: (x, y) => centerPoint = { x, y } };
+    let textElement = createSVGTextElement();
+    textElement.getBBox = () => createDOMRect(0, 0, 12, 18.5);
 
     let b = new Nucleobase(textElement);
 
     b.setCenterPoint({ x: 4781.327, y: 0.3718 });
 
-    expect(centerPoint).toStrictEqual({ x: 4781.327, y: 0.3718 });
+    expect(Number.parseFloat(b.domNode.getAttribute('x'))).toBeCloseTo(4781.327 - 6);
+    expect(Number.parseFloat(b.domNode.getAttribute('y'))).toBeCloseTo(0.3718 - 9.25);
   });
 
   test('centerClientPoint getter', () => {
-    let textElement = { node: { getBoundingClientRect: () => ({ left: 316, right: 352, top: 601, bottom: 624 }) } };
+    let textElement = createSVGTextElement();
+    textElement.getBoundingClientRect = () => createDOMRect(316, 601, 36, 23);
 
     let b = new Nucleobase(textElement);
 
@@ -217,7 +212,8 @@ describe('Nucleobase class', () => {
   });
 
   test('getCenterClientPoint method', () => {
-    let textElement = { node: { getBoundingClientRect: () => ({ left: -58, right: -41, top: 211, bottom: 230 }) } };
+    let textElement = createSVGTextElement();
+    textElement.getBoundingClientRect = () => createDOMRect(-58, 211, 17, 19);
 
     let b = new Nucleobase(textElement);
 

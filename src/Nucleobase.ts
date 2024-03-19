@@ -20,8 +20,8 @@ export class Nucleobase {
    * Creates a nucleobase with the given text content.
    */
   static create(textContent: string): Nucleobase {
-    let textElement = new SVG.Text();
-    textElement.node.textContent = textContent;
+    let textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    textElement.textContent = textContent;
 
     let b = new Nucleobase(textElement);
 
@@ -33,105 +33,83 @@ export class Nucleobase {
   }
 
   /**
-   * @param textElement The text element for the nucleobase to wrap.
+   * @param textElement The text element that is the nucleobase.
    */
-  constructor(readonly textElement: SVG.Text) {}
+  constructor(private textElement: SVGTextElement) {}
 
   /**
-   * The actual DOM node of the text element for this nucleobase.
+   * The actual DOM node of the text element that is the nucleobase.
    */
-  get textElementDOMNode() {
-    return this.textElement.node;
+  get domNode() {
+    return this.textElement;
   }
 
   /**
-   * The text content of the nucleobase.
+   * The text content of the text element that is the nucleobase.
    */
-  get textContent(): string {
-    return this.textElement.text();
+  get textContent() {
+    return this.domNode.textContent;
   }
 
   set textContent(textContent) {
-    this.textElementDOMNode.textContent = textContent;
+    this.domNode.textContent = textContent;
   }
 
   /**
-   * The `id` attribute of the text element of the nucleobase.
+   * The ID of the text element that is the nucleobase.
    */
   get id() {
-    // don't use the `id` method provided by the SVG.js library
-    // (since it will auto-initialize an ID for an SVG element if it did not already have one)
-    return this.textElementDOMNode.getAttribute('id');
+    // don't use the `id` method provided by the SVG.js library for SVG elements
+    // (since it will auto-initialize the IDs of SVG elements)
+    return this.domNode.id;
   }
 
   /**
-   * Assigns a UUID to this nucleobase.
+   * Assigns a UUID to the nucleobase.
    *
-   * (Overwrites any preexisting ID that this nucleobase had.)
+   * (Overwrites any preexisting ID that the nucleobase had.)
    */
   assignUUID(): void {
-    assignUUID(this.textElement);
+    assignUUID(this.domNode);
   }
 
   /**
-   * The parent element containing this nucleobase.
-   *
-   * Will be nullish if this nucleobase is not a child of another element.
+   * Appends the text element that is the nucleobase to the given container node.
    */
-  get parent() {
-    return this.textElement.parent();
+  appendTo(container: Node): void {
+    container.appendChild(this.domNode);
   }
 
   /**
-   * The actual DOM node of the parent for this nucleobase.
+   * Removes the text element that is the nucleobase from its parent container node.
    *
-   * Will be nullish if this nucleobase has no parent.
-   */
-  get parentDOMNode() {
-    let parent = this.parent;
-
-    return parent ? parent.node : null;
-  }
-
-  /**
-   * Appends the nucleobase to the SVG element.
-   */
-  appendTo(ele: SVG.Element): void {
-    this.textElement.addTo(ele);
-  }
-
-  /**
-   * Removes the nucleobase from its parent container element.
-   *
-   * (Has no effect if the nucleobase was not a child of another element to begin with.)
+   * Has no effect if the nucleobase (text element) was not a child of a parent container node to begin with.
    */
   remove(): void {
-    this.textElement.remove();
+    this.domNode.remove();
   }
 
   /**
    * Returns true if the given node is a parent (or grandparent, great-grandparent, etc.)
-   * of the text element of this nucleobase.
+   * of the text element that is the nucleobase.
    *
-   * Returns false otherwise.
+   * Returns false otherwise, including for the nucleobase (text element) itself.
    */
-  isIn(node: Node): boolean {
-    return node.contains(this.textElementDOMNode);
+  isIn(container: Node): boolean {
+    return container.contains(this.domNode) && container !== this.domNode;
   }
 
   /**
-   * The center point of this nucleobase (in the coordinate system of its parent SVG document).
-   *
-   * Is the same as the center point of the text element for this nucleobase.
+   * The center point of the nucleobase (in the coordinate system of its parent SVG document).
    */
   get centerPoint(): Point {
-    let { cx, cy } = this.textElement.bbox();
+    let { cx, cy } = (new SVG.Text(this.domNode)).bbox();
 
     return { x: cx, y: cy };
   }
 
   set centerPoint(p) {
-    this.textElement.center(p.x, p.y);
+    (new SVG.Text(this.domNode)).center(p.x, p.y);
   }
 
   getCenterPoint() {
@@ -143,13 +121,11 @@ export class Nucleobase {
   }
 
   /**
-   * The center point of this nucleobase in the client coordinate system
+   * The center point of the nucleobase in the client coordinate system
    * (i.e., the same coordinate system used by methods such as `getBoundingClientRect`).
-   *
-   * Is the same as the center client point of the text element for this nucleobase.
    */
   get centerClientPoint(): Point {
-    let boundingClientRect = this.textElementDOMNode.getBoundingClientRect();
+    let boundingClientRect = this.domNode.getBoundingClientRect();
 
     return {
       x: mean([boundingClientRect.left, boundingClientRect.right]),
