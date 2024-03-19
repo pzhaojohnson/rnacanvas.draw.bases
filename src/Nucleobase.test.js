@@ -51,6 +51,16 @@ describe('Nucleobase class', () => {
     expect(textElement).toBeTruthy();
   });
 
+  test('getAttribute method', () => {
+    let textElement = createSVGTextElement();
+    textElement.setAttribute('fill', '#ff632b');
+    textElement.setAttribute('font-size', '12.82');
+
+    let b = new Nucleobase(textElement);
+    expect(b.getAttribute('fill')).toBe('#ff632b');
+    expect(b.getAttribute('font-size')).toBe('12.82');
+  });
+
   test('textContent getter', () => {
     let textElement = createSVGTextElement();
     textElement.textContent = 'Asmcvjiq 328rhf';
