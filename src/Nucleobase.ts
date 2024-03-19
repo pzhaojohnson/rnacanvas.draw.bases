@@ -28,7 +28,7 @@ export class Nucleobase {
   /**
    * Should match the keys of the default attributes object.
    */
-  static defaultAttributeNames = [
+  static readonly defaultAttributeNames = [
     'font-family',
     'font-size',
     'font-weight',
