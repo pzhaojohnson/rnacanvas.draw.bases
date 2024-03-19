@@ -187,6 +187,18 @@ describe('Nucleobase class', () => {
     expect(b.isIn(textElement)).toBe(false);
   });
 
+  test('hasParent method', () => {
+    let b1 = Nucleobase.create('G');
+    let b2 = Nucleobase.create('G');
+
+    let container = (new SVG.Svg()).node;
+
+    b1.appendTo(container);
+
+    expect(b1.hasParent()).toBe(true);
+    expect(b2.hasParent()).toBe(false);
+  });
+
   test('centerPoint getter', () => {
     let textElement = createSVGTextElement();
     textElement.getBBox = () => createDOMRect(45, 82, 18, 33);

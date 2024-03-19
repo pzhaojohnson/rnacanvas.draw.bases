@@ -138,6 +138,15 @@ export class Nucleobase {
   }
 
   /**
+   * Returns true if the text element that is the nucleobase is a child of any sort of parent container node.
+   *
+   * Returns false otherwise.
+   */
+  hasParent(): boolean {
+    return this.domNode.parentNode ? true : false;
+  }
+
+  /**
    * The center point of the nucleobase (in the coordinate system of its parent SVG document).
    */
   get centerPoint(): Point {
