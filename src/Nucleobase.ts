@@ -12,6 +12,13 @@ export type Point = {
   y: number;
 };
 
+type Box = {
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+};
+
 /**
  * A nucleobase in a two-dimensional nucleic acid structure drawing.
  */
@@ -144,6 +151,13 @@ export class Nucleobase {
    */
   hasParent(): boolean {
     return this.domNode.parentNode ? true : false;
+  }
+
+  /**
+   * Returns the bounding box of the text element that is the nucleobase.
+   */
+  get bbox(): Box {
+    return this.domNode.getBBox();
   }
 
   /**

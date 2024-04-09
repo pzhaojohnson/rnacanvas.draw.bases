@@ -199,6 +199,16 @@ describe('Nucleobase class', () => {
     expect(b2.hasParent()).toBe(false);
   });
 
+  test('bbox getter', () => {
+    let textElement = createSVGTextElement();
+    textElement.getBBox = () => createDOMRect(-57.2, 88.4, 901.73, 1129.4);
+
+    let b = new Nucleobase(textElement);
+
+    let { x, y, width, height } = b.bbox;
+    expect([x, y, width, height]).toStrictEqual([-57.2, 88.4, 901.73, 1129.4]);
+  });
+
   test('centerPoint getter', () => {
     let textElement = createSVGTextElement();
     textElement.getBBox = () => createDOMRect(45, 82, 18, 33);
