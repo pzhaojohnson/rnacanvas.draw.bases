@@ -254,6 +254,16 @@ describe('Nucleobase class', () => {
     expect(Number.parseFloat(b.domNode.getAttribute('y'))).toBeCloseTo(0.3718 - 9.25);
   });
 
+  test('boundingClientRect getter', () => {
+    let textElement = createSVGTextElement();
+    textElement.getBoundingClientRect = () => createDOMRect(52.82, 889.23, 501.27, 8003.74);
+
+    let b = new Nucleobase(textElement);
+
+    let { x, y, width, height } = b.boundingClientRect;
+    expect([x, y, width, height]).toStrictEqual([52.82, 889.23, 501.27, 8003.74]);
+  });
+
   test('centerClientPoint getter', () => {
     let textElement = createSVGTextElement();
     textElement.getBoundingClientRect = () => createDOMRect(316, 601, 36, 23);

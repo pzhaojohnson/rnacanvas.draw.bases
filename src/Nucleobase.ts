@@ -182,6 +182,14 @@ export class Nucleobase {
   }
 
   /**
+   * Returns the bounding client rect of the text element that is the nucleobase
+   * (i.e., will return a box with the same values as that returned by the `getBoundingClientRect` method).
+   */
+  get boundingClientRect(): Box {
+    return this.domNode.getBoundingClientRect();
+  }
+
+  /**
    * The center point of the nucleobase in the client coordinate system
    * (i.e., the same coordinate system used by methods such as `getBoundingClientRect`).
    */
