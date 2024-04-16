@@ -20,6 +20,30 @@ type Box = {
 };
 
 /**
+ * Move events are defined as occurring when either the `x` or `y` attributes
+ * of the text element that is a nucleobase are changed.
+ *
+ * Note that by this definition things like transforms and changes to CSS styles
+ * are not considered move events.
+ */
+type MoveEventName = 'move';
+
+/**
+ * The name of an event on a nucleobase.
+ */
+type EventName = (
+  MoveEventName
+);
+
+interface EventListener {
+  (): void;
+}
+
+type EventListeners = {
+  'move': EventListener[];
+};
+
+/**
  * A nucleobase in a two-dimensional nucleic acid structure drawing.
  */
 export class Nucleobase {
@@ -60,13 +84,20 @@ export class Nucleobase {
     return b;
   }
 
+  private eventListeners: EventListeners = {
+    'move': [],
+  };
+
   /**
    * Note that this constructor will not modify the input text element in any way
    * (e.g., won't set attributes to default values).
    *
    * @param textElement The text element that is the nucleobase.
    */
-  constructor(private textElement: SVGTextElement) {}
+  constructor(private textElement: SVGTextElement) {
+    let movementObserver = new MutationObserver(() => this.callEventListeners('move'));
+    movementObserver.observe(textElement, { attributes: true, attributeFilter: ['x', 'y'] });
+  }
 
   /**
    * The actual DOM node of the text element that is the nucleobase.
@@ -204,5 +235,19 @@ export class Nucleobase {
 
   getCenterClientPoint() {
     return this.centerClientPoint;
+  }
+
+  /**
+   * Adds a listener for the specified event on the nucleobase.
+   */
+  addEventListener(eventName: EventName, listener: EventListener): void {
+    this.eventListeners[eventName].push(listener);
+  }
+
+  /**
+   * Calls all event listeners for the specified event.
+   */
+  private callEventListeners(eventName: EventName): void {
+    this.eventListeners[eventName].forEach(listener => listener());
   }
 }
