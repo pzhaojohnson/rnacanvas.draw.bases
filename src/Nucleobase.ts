@@ -79,7 +79,7 @@ export class Nucleobase {
     // (when reopening a saved drawing, for instance)
     b.assignUUID();
 
-    Nucleobase.defaultAttributeNames.forEach(name => b.setAttribute(name, Nucleobase.defaultAttributes[name]));
+    b.setAttributes(Nucleobase.defaultAttributes);
 
     return b;
   }
