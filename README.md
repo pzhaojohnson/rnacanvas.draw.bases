@@ -3,6 +3,16 @@
 The `Nucleobase` class represents a `text` element within an SVG document
 (with special functionality related to drawing nucleobases).
 
+## static create()
+
+Creates a nucleobase with the specified text content.
+
+```typescript
+let b = Nucleobase.create('A');
+
+b.textContent === 'A'; // true
+```
+
 ## constructor()
 
 Receives an `SVGTextElement` instance as input.
@@ -23,5 +33,5 @@ A reference to the `SVGTextElement` instance that is the nucleobase.
 let textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 let b = new Nucleobase(textElement);
 
-b.domNode === textElement // true
+b.domNode === textElement; // true
 ```
