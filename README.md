@@ -58,7 +58,7 @@ b.setAttribute('fill', '#b28ccf');
 b.domNode.getAttribute('fill') === '#b28ccf'; // true
 ```
 
-## setAttributes
+## setAttributes()
 
 Set multiple attributes of the SVG text element that is the nucleobase at once
 using an object of attribute values keyed by attribute name.
