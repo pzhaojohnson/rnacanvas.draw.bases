@@ -82,6 +82,19 @@ describe('Nucleobase class', () => {
     expect(textElement.getAttribute('font-weight')).toBe('200');
   });
 
+  test('setAttributes method', () => {
+    let textElement = createSVGTextElement();
+    let b = new Nucleobase(textElement);
+
+    b.setAttributes({ 'fill': '#44ba72', 'font-size': '12.64cm' });
+
+    expect(textElement.getAttribute('fill')).toBe('#44ba72');
+    expect(textElement.getAttribute('font-size')).toBe('12.64cm');
+
+    // invalid input
+    expect(() => b.setAttributes('asdf')).not.toThrow();
+  });
+
   test('textContent getter', () => {
     let textElement = createSVGTextElement();
     textElement.textContent = 'Asmcvjiq 328rhf';

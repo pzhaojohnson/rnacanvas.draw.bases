@@ -121,6 +121,18 @@ export class Nucleobase {
   }
 
   /**
+   * Set attributes of the text element that is the nucleobase
+   * using an object of attribute values keyed by attribute name.
+   *
+   * This method simply ignores invalid inputs.
+   */
+  setAttributes(attributes: { [name: string]: unknown } | unknown): void {
+    try {
+      (new SVG.Text(this.domNode)).attr(attributes as any);
+    } catch {}
+  }
+
+  /**
    * The text content of the text element that is the nucleobase.
    */
   get textContent() {
