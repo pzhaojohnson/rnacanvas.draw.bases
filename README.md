@@ -46,3 +46,29 @@ b.domNode.setAttribute('fill', '#a62cf1');
 
 b.getAttribute('fill') === '#a62cf1'; // true
 ```
+
+## setAttribute()
+
+Set an attribute of the SVG text element that is the nucleobase.
+
+```typescript
+let b = Nucleobase.create('C');
+b.setAttribute('fill', '#b28ccf');
+
+b.domNode.getAttribute('fill') === '#b28ccf'; // true
+```
+
+## setAttributes
+
+Set multiple attributes of the SVG text element that is the nucleobase at once
+using an object of attribute values keyed by attribute name.
+
+Invalid inputs are ignored. (This method is not supposed to throw.)
+
+```typescript
+let b = Nucleobase.create('U');
+b.setAttributes({ 'font-family': 'Comic Sans', 'fill': '#fa391c' });
+
+b.domNode.getAttribute('font-family') === 'Comic Sans'; // true
+b.domNode.getAttribute('fill') === '#fa391c'; // true
+```
