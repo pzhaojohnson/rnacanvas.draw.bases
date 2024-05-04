@@ -35,3 +35,14 @@ let b = new Nucleobase(textElement);
 
 b.domNode === textElement; // true
 ```
+
+## getAttribute()
+
+Get an attribute of the SVG text element that is the nucleobase.
+
+```typescript
+let b = Nucleobase.create('G');
+b.domNode.setAttribute('fill', '#a62cf1');
+
+b.getAttribute('fill') === '#a62cf1'; // true
+```
