@@ -161,3 +161,15 @@ b.domNode.textContent = 'Nucleobase-27';
 
 b.textContent === 'Nucleobase-27'; // true
 ```
+
+## bbox
+
+The bounding box of the text element that is the nucleobase.
+
+Essentially, just forwards the values returned by the underlying `getBBox` method.
+
+```typescript
+let b = Nucleobase.create('c');
+
+b.bbox; // a box with X and Y coordinates and width and height
+```
