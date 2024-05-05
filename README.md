@@ -173,3 +173,23 @@ let b = Nucleobase.create('c');
 
 b.bbox; // a box with X and Y coordinates and width and height
 ```
+
+## centerPoint
+
+The center point of the bounding box of the nucleobase.
+
+Setting this will move the nucleobase.
+
+```typescript
+let b = Nucleobase.create('T');
+
+b.centerPoint = { x: 92, y: -112 };
+```
+
+## getCenterPoint()
+
+A simple getter method for the center point of the nucleobase.
+
+## setCenterPoint()
+
+A simple setter method for the center point of the nucleobase.
