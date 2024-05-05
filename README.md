@@ -101,3 +101,16 @@ let b = Nucleobase.create('C');
 
 b.assignUUID();
 ```
+
+## textContent
+
+The text content of the text element that is the nucleobase.
+
+(More precisely, returns that which is returned by the `textContent` property of the text element.)
+
+```typescript
+let b = Nucleobase.create('');
+b.domNode.textContent = 'Nucleobase-27';
+
+b.textContent === 'Nucleobase-27'; // true
+```
