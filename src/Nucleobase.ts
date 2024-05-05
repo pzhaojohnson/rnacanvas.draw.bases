@@ -133,17 +133,6 @@ export class Nucleobase {
   }
 
   /**
-   * The text content of the text element that is the nucleobase.
-   */
-  get textContent() {
-    return this.domNode.textContent;
-  }
-
-  set textContent(textContent) {
-    this.domNode.textContent = textContent;
-  }
-
-  /**
    * The ID of the text element that is the nucleobase.
    */
   get id() {
@@ -159,6 +148,17 @@ export class Nucleobase {
    */
   assignUUID(): void {
     assignUUID(this.domNode);
+  }
+
+  /**
+   * The text content of the text element that is the nucleobase.
+   */
+  get textContent() {
+    return this.domNode.textContent;
+  }
+
+  set textContent(textContent) {
+    this.domNode.textContent = textContent;
   }
 
   /**

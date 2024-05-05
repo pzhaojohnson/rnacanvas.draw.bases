@@ -95,23 +95,6 @@ describe('Nucleobase class', () => {
     expect(() => b.setAttributes('asdf')).not.toThrow();
   });
 
-  test('textContent getter', () => {
-    let textElement = createSVGTextElement();
-    textElement.textContent = 'Asmcvjiq 328rhf';
-
-    let b = new Nucleobase(textElement);
-    expect(b.textContent).toBe('Asmcvjiq 328rhf');
-  });
-
-  test('textContent setter', () => {
-    let textElement = createSVGTextElement();
-
-    let b = new Nucleobase(textElement);
-
-    b.textContent = 'd8238fDFJIWef ijsoifwe';
-    expect(textElement.textContent).toBe('d8238fDFJIWef ijsoifwe');
-  });
-
   describe('id getter', () => {
     it('returns the ID of the text element that is the nucleobase', () => {
       let textElement = createSVGTextElement();
@@ -148,6 +131,23 @@ describe('Nucleobase class', () => {
 
     // must start with a letter (per the rules for SVG element IDs)
     expect(b.id.charAt(0)).toMatch(/[A-Za-z]/);
+  });
+
+  test('textContent getter', () => {
+    let textElement = createSVGTextElement();
+    textElement.textContent = 'Asmcvjiq 328rhf';
+
+    let b = new Nucleobase(textElement);
+    expect(b.textContent).toBe('Asmcvjiq 328rhf');
+  });
+
+  test('textContent setter', () => {
+    let textElement = createSVGTextElement();
+
+    let b = new Nucleobase(textElement);
+
+    b.textContent = 'd8238fDFJIWef ijsoifwe';
+    expect(textElement.textContent).toBe('d8238fDFJIWef ijsoifwe');
   });
 
   describe('appendTo method', () => {
