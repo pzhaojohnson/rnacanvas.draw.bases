@@ -6,6 +6,12 @@ The `Nucleobase` class represents a `text` element within an SVG document that i
 
 Creates a nucleobase with the specified text content.
 
+This method will also apply default values to the created nucleobase
+and assign it a UUID.
+
+(It is necessary for all elements to have a unique ID
+when saving an RNAcanvas drawing.)
+
 ```typescript
 let b = Nucleobase.create('A');
 
