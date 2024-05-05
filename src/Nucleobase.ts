@@ -107,6 +107,41 @@ export class Nucleobase {
   }
 
   /**
+   * Appends the text element that is the nucleobase to the given container node.
+   */
+  appendTo(container: Node): void {
+    container.appendChild(this.domNode);
+  }
+
+  /**
+   * Removes the text element that is the nucleobase from its parent container node.
+   *
+   * Has no effect if the nucleobase (text element) was not a child of a parent container node to begin with.
+   */
+  remove(): void {
+    this.domNode.remove();
+  }
+
+  /**
+   * Returns true if the given node is a parent (or grandparent, great-grandparent, etc.)
+   * of the text element that is the nucleobase.
+   *
+   * Returns false otherwise, including for the nucleobase (text element) itself.
+   */
+  isIn(container: Node): boolean {
+    return container.contains(this.domNode) && container !== this.domNode;
+  }
+
+  /**
+   * Returns true if the text element that is the nucleobase is a child of any sort of parent container node.
+   *
+   * Returns false otherwise.
+   */
+  hasParent(): boolean {
+    return this.domNode.parentNode ? true : false;
+  }
+
+  /**
    * Get an attribute of the text element that is the nucleobase.
    */
   getAttribute(name: string) {
@@ -159,41 +194,6 @@ export class Nucleobase {
 
   set textContent(textContent) {
     this.domNode.textContent = textContent;
-  }
-
-  /**
-   * Appends the text element that is the nucleobase to the given container node.
-   */
-  appendTo(container: Node): void {
-    container.appendChild(this.domNode);
-  }
-
-  /**
-   * Removes the text element that is the nucleobase from its parent container node.
-   *
-   * Has no effect if the nucleobase (text element) was not a child of a parent container node to begin with.
-   */
-  remove(): void {
-    this.domNode.remove();
-  }
-
-  /**
-   * Returns true if the given node is a parent (or grandparent, great-grandparent, etc.)
-   * of the text element that is the nucleobase.
-   *
-   * Returns false otherwise, including for the nucleobase (text element) itself.
-   */
-  isIn(container: Node): boolean {
-    return container.contains(this.domNode) && container !== this.domNode;
-  }
-
-  /**
-   * Returns true if the text element that is the nucleobase is a child of any sort of parent container node.
-   *
-   * Returns false otherwise.
-   */
-  hasParent(): boolean {
-    return this.domNode.parentNode ? true : false;
   }
 
   /**

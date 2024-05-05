@@ -61,6 +61,68 @@ describe('Nucleobase class', () => {
     expect(textElement).toBeTruthy();
   });
 
+  describe('appendTo method', () => {
+    it('appends the text element that is the nucleobase to the given container node', () => {
+      let textElement = createSVGTextElement();
+      let b = new Nucleobase(textElement);
+
+      let container = (new SVG.Svg()).node;
+
+      // add some elements to append after
+      container.appendChild(createSVGTextElement());
+      container.appendChild(createSVGTextElement());
+      container.appendChild(createSVGTextElement());
+      container.appendChild(createSVGTextElement());
+
+      expect(container.contains(textElement)).toBeFalsy();
+      b.appendTo(container);
+      expect(container.childNodes[4]).toBe(textElement);
+    });
+  });
+
+  describe('remove method', () => {
+    it('removes the text element that is the nucleobase from any parent container node that it is in', () => {
+      let textElement = createSVGTextElement();
+      let b = new Nucleobase(textElement);
+
+      let container = (new SVG.Svg()).node;
+      b.appendTo(container);
+
+      expect(container.contains(textElement)).toBeTruthy();
+      b.remove();
+      expect(container.contains(textElement)).toBeFalsy();
+    });
+  });
+
+  test('isIn method', () => {
+    let textElement = createSVGTextElement();
+    let b = new Nucleobase(textElement);
+
+    let container1 = (new SVG.Svg()).node;
+    let container2 = (new SVG.Svg()).node;
+
+    b.appendTo(container1);
+
+    expect(b.isIn(container1)).toBe(true);
+    expect(b.isIn(container2)).toBe(false);
+
+    // should return false for the nucleobase (text element) itself
+    // (cannot simply use the `contains` method of nodes and do nothing else)
+    expect(b.isIn(textElement)).toBe(false);
+  });
+
+  test('hasParent method', () => {
+    let b1 = Nucleobase.create('G');
+    let b2 = Nucleobase.create('G');
+
+    let container = (new SVG.Svg()).node;
+
+    b1.appendTo(container);
+
+    expect(b1.hasParent()).toBe(true);
+    expect(b2.hasParent()).toBe(false);
+  });
+
   test('getAttribute method', () => {
     let textElement = createSVGTextElement();
     textElement.setAttribute('fill', '#ff632b');
@@ -148,68 +210,6 @@ describe('Nucleobase class', () => {
 
     b.textContent = 'd8238fDFJIWef ijsoifwe';
     expect(textElement.textContent).toBe('d8238fDFJIWef ijsoifwe');
-  });
-
-  describe('appendTo method', () => {
-    it('appends the text element that is the nucleobase to the given container node', () => {
-      let textElement = createSVGTextElement();
-      let b = new Nucleobase(textElement);
-
-      let container = (new SVG.Svg()).node;
-
-      // add some elements to append after
-      container.appendChild(createSVGTextElement());
-      container.appendChild(createSVGTextElement());
-      container.appendChild(createSVGTextElement());
-      container.appendChild(createSVGTextElement());
-
-      expect(container.contains(textElement)).toBeFalsy();
-      b.appendTo(container);
-      expect(container.childNodes[4]).toBe(textElement);
-    });
-  });
-
-  describe('remove method', () => {
-    it('removes the text element that is the nucleobase from any parent container node that it is in', () => {
-      let textElement = createSVGTextElement();
-      let b = new Nucleobase(textElement);
-
-      let container = (new SVG.Svg()).node;
-      b.appendTo(container);
-
-      expect(container.contains(textElement)).toBeTruthy();
-      b.remove();
-      expect(container.contains(textElement)).toBeFalsy();
-    });
-  });
-
-  test('isIn method', () => {
-    let textElement = createSVGTextElement();
-    let b = new Nucleobase(textElement);
-
-    let container1 = (new SVG.Svg()).node;
-    let container2 = (new SVG.Svg()).node;
-
-    b.appendTo(container1);
-
-    expect(b.isIn(container1)).toBe(true);
-    expect(b.isIn(container2)).toBe(false);
-
-    // should return false for the nucleobase (text element) itself
-    // (cannot simply use the `contains` method of nodes and do nothing else)
-    expect(b.isIn(textElement)).toBe(false);
-  });
-
-  test('hasParent method', () => {
-    let b1 = Nucleobase.create('G');
-    let b2 = Nucleobase.create('G');
-
-    let container = (new SVG.Svg()).node;
-
-    b1.appendTo(container);
-
-    expect(b1.hasParent()).toBe(true);
-    expect(b2.hasParent()).toBe(false);
   });
 
   test('bbox getter', () => {
