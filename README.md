@@ -72,3 +72,32 @@ b.setAttributes({ 'font-family': 'Comic Sans', 'fill': '#fa391c' });
 b.domNode.getAttribute('font-family') === 'Comic Sans'; // true
 b.domNode.getAttribute('fill') === '#fa391c'; // true
 ```
+
+## id
+
+The `id` attribute of the text element that is the nucleobase.
+
+(More precisely, returns that which is returned by the `id` property of the text element.)
+
+```typescript
+let b = Nucleobase.create('A');
+b.domNode.setAttribute('id', 'text-123456');
+
+b.id === 'text-123456'; // true
+```
+
+## assignUUID()
+
+Creates and assigns a new UUID to the text element that is the nucleobase.
+
+This method will overwrite any existing ID that the nucleobase has.
+
+The assigned UUID might also have some letters prepended to it
+(since all SVG element IDs must start with a letter),
+resulting in the assigned UUID having more than 36 characters.
+
+```typescript
+let b = Nucleobase.create('C');
+
+b.assignUUID();
+```
