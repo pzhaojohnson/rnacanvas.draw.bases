@@ -193,3 +193,20 @@ A simple getter method for the center point of the nucleobase.
 ## setCenterPoint()
 
 A simple setter method for the center point of the nucleobase.
+
+## addEventListener()
+
+For listening for events on the nucleobase.
+
+### Listening for move events
+
+Move events are defined as occurring when either the `x` or `y` attributes of the text element that is the nucleobase are changed.
+
+Note that this definition does not include other changes that might change where the nucleobase appears on screen
+(e.g., transforms).
+
+```typescript
+let b = Nucleobase.create('A');
+
+b.addEventListener('move', () => attachedElement.reposition());
+```
