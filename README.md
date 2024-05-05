@@ -68,10 +68,10 @@ svgDoc.contains(b.domNode); // false
 
 ## isIn()
 
-Returns true if the text element that is the nucleobase is a child
+Returns `true` if the text element that is the nucleobase is a child
 (or grandchild, great-grandchild, etc.) of the given node.
 
-Returns false otherwise, including when input the text element itself.
+Returns `false` otherwise, including when input the text element itself.
 
 ```typescript
 let svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
