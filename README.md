@@ -36,6 +36,53 @@ let b = new Nucleobase(textElement);
 b.domNode === textElement; // true
 ```
 
+## appendTo()
+
+Appends the text element that is the nucleobase to the given container node.
+
+```typescript
+let svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+let b = Nucleobase.create('A');
+b.appendTo(svgDoc);
+
+svgDoc.contains(b.domNode); // true
+```
+
+## remove()
+
+Removes the text element that is the nucleobase from any parent container node that it is in.
+
+This method does nothing if the text element does not have a parent container node.
+
+```typescript
+let svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+let b = Nucleobase.create('G');
+
+b.appendTo(svgDoc);
+svgDoc.contains(b.domNode); // true
+
+b.remove();
+svgDoc.contains(b.domNode); // false
+```
+
+## isIn()
+
+Returns true if the text element that is the nucleobase is a child
+(or grandchild, great-grandchild, etc.) of the given node.
+
+Returns false otherwise, including when input the text element itself.
+
+```typescript
+let svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+let b = Nucleobase.create('U');
+b.appendTo(svgDoc);
+
+b.isIn(svgDoc); // true
+b.isIn(b.domNode); // false
+```
+
 ## getAttribute()
 
 Get an attribute of the SVG text element that is the nucleobase.
