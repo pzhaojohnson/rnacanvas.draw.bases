@@ -1,3 +1,11 @@
+# Installation
+
+With `npm`:
+
+```
+npm install @rnacanvas/draw.bases
+```
+
 # The `Nucleobase` class
 
 Represents a `text` element within an SVG document that is a nucleobase.
