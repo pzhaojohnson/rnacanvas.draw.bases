@@ -1,6 +1,12 @@
-# Nucleobase
+# The `Nucleobase` class
 
-The `Nucleobase` class represents a `text` element within an SVG document that is a nucleobase.
+Represents a `text` element within an SVG document that is a nucleobase.
+
+To use:
+
+```typescript
+import { Nucleobase } from '@rnacanvas/draw.bases';
+```
 
 ## static create()
 
