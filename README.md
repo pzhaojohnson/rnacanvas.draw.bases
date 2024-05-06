@@ -6,9 +6,11 @@ With `npm`:
 npm install @rnacanvas/draw.bases
 ```
 
-# The `Nucleobase` class
+# Exports
 
-Represents a `text` element within an SVG document that is a nucleobase.
+## `Nucleobase`
+
+The `Nucleobase` class represents a `text` element within an SVG document that is a nucleobase.
 
 To use:
 
@@ -16,7 +18,7 @@ To use:
 import { Nucleobase } from '@rnacanvas/draw.bases';
 ```
 
-## `static create()`
+### `static create()`
 
 Creates a nucleobase with the specified text content.
 
@@ -32,7 +34,7 @@ let b = Nucleobase.create('A');
 b.textContent === 'A'; // true
 ```
 
-## `constructor()`
+### `constructor()`
 
 Receives an `SVGTextElement` instance as input.
 
@@ -44,7 +46,7 @@ let textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text')
 let b = new Nucleobase(textElement);
 ```
 
-## `domNode`
+### `domNode`
 
 A reference to the `SVGTextElement` instance that is the nucleobase.
 
@@ -55,7 +57,7 @@ let b = new Nucleobase(textElement);
 b.domNode === textElement; // true
 ```
 
-## `appendTo()`
+### `appendTo()`
 
 Appends the text element that is the nucleobase to the given container node.
 
@@ -68,7 +70,7 @@ b.appendTo(svgDoc);
 svgDoc.contains(b.domNode); // true
 ```
 
-## `remove()`
+### `remove()`
 
 Removes the text element that is the nucleobase from any parent container node that it is in.
 
@@ -85,7 +87,7 @@ b.remove();
 svgDoc.contains(b.domNode); // false
 ```
 
-## `isIn()`
+### `isIn()`
 
 Returns `true` if the text element that is the nucleobase is a child
 (or grandchild, great-grandchild, etc.) of the given node.
@@ -102,7 +104,7 @@ b.isIn(svgDoc); // true
 b.isIn(b.domNode); // false
 ```
 
-## `getAttribute()`
+### `getAttribute()`
 
 Get an attribute of the SVG text element that is the nucleobase.
 
@@ -112,7 +114,7 @@ nucleobase.domNode.setAttribute('fill', '#a62cf1');
 nucleobase.getAttribute('fill') === '#a62cf1'; // true
 ```
 
-## `setAttribute()`
+### `setAttribute()`
 
 Set an attribute of the SVG text element that is the nucleobase.
 
@@ -122,7 +124,7 @@ nucleobase.setAttribute('fill', '#b28ccf');
 nucleobase.domNode.getAttribute('fill') === '#b28ccf'; // true
 ```
 
-## `setAttributes()`
+### `setAttributes()`
 
 Set multiple attributes of the SVG text element that is the nucleobase at once
 using an object of attribute values keyed by attribute name.
@@ -136,7 +138,7 @@ nucleobase.domNode.getAttribute('font-family') === 'Comic Sans'; // true
 nucleobase.domNode.getAttribute('fill') === '#fa391c'; // true
 ```
 
-## `id`
+### `id`
 
 The `id` attribute of the text element that is the nucleobase.
 
@@ -148,7 +150,7 @@ nucleobase.domNode.setAttribute('id', 'text-123456');
 nucleobase.id === 'text-123456'; // true
 ```
 
-## `assignUUID()`
+### `assignUUID()`
 
 Creates and assigns a new UUID to the text element that is the nucleobase.
 
@@ -162,7 +164,7 @@ resulting in the assigned UUID having more than 36 characters.
 nucleobase.assignUUID();
 ```
 
-## `textContent`
+### `textContent`
 
 The text content of the text element that is the nucleobase.
 
@@ -174,7 +176,7 @@ nucleobase.domNode.textContent = 'R';
 nucleobase.textContent === 'R'; // true
 ```
 
-## `bbox`
+### `bbox`
 
 The bounding box of the text element that is the nucleobase.
 
@@ -184,7 +186,7 @@ Essentially, just forwards the values returned by the underlying `getBBox` metho
 nucleobase.bbox; // a box with X and Y coordinates and width and height
 ```
 
-## `centerPoint`
+### `centerPoint`
 
 The center point of the bounding box of the nucleobase.
 
@@ -195,7 +197,7 @@ Setting this will move the nucleobase.
 nucleobase.centerPoint = { x: 92, y: -112 };
 ```
 
-## `getCenterPoint()`
+### `getCenterPoint()`
 
 A simple getter method for the center point of the nucleobase.
 
@@ -203,7 +205,7 @@ A simple getter method for the center point of the nucleobase.
 nucleobase.getCenterPoint();
 ```
 
-## `setCenterPoint()`
+### `setCenterPoint()`
 
 A simple setter method for the center point of the nucleobase.
 
@@ -211,11 +213,11 @@ A simple setter method for the center point of the nucleobase.
 nucleobase.setCenterPoint({ x: 92, y: 178 });
 ```
 
-## `addEventListener()`
+### `addEventListener()`
 
 For listening for events on the nucleobase.
 
-### Listening for move events
+#### Listening for move events
 
 Move events are defined as occurring when either the `x` or `y` attributes of the text element that is the nucleobase are changed.
 
