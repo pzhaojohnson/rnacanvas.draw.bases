@@ -107,10 +107,9 @@ b.isIn(b.domNode); // false
 Get an attribute of the SVG text element that is the nucleobase.
 
 ```typescript
-let b = Nucleobase.create('G');
-b.domNode.setAttribute('fill', '#a62cf1');
+nucleobase.domNode.setAttribute('fill', '#a62cf1');
 
-b.getAttribute('fill') === '#a62cf1'; // true
+nucleobase.getAttribute('fill') === '#a62cf1'; // true
 ```
 
 ## `setAttribute()`
@@ -118,10 +117,9 @@ b.getAttribute('fill') === '#a62cf1'; // true
 Set an attribute of the SVG text element that is the nucleobase.
 
 ```typescript
-let b = Nucleobase.create('C');
-b.setAttribute('fill', '#b28ccf');
+nucleobase.setAttribute('fill', '#b28ccf');
 
-b.domNode.getAttribute('fill') === '#b28ccf'; // true
+nucleobase.domNode.getAttribute('fill') === '#b28ccf'; // true
 ```
 
 ## `setAttributes()`
@@ -132,11 +130,10 @@ using an object of attribute values keyed by attribute name.
 Invalid inputs are ignored. (This method is not supposed to throw.)
 
 ```typescript
-let b = Nucleobase.create('U');
-b.setAttributes({ 'font-family': 'Comic Sans', 'fill': '#fa391c' });
+nucleobase.setAttributes({ 'font-family': 'Comic Sans', 'fill': '#fa391c' });
 
-b.domNode.getAttribute('font-family') === 'Comic Sans'; // true
-b.domNode.getAttribute('fill') === '#fa391c'; // true
+nucleobase.domNode.getAttribute('font-family') === 'Comic Sans'; // true
+nucleobase.domNode.getAttribute('fill') === '#fa391c'; // true
 ```
 
 ## `id`
@@ -146,10 +143,9 @@ The `id` attribute of the text element that is the nucleobase.
 (More precisely, returns that which is returned by the `id` property of the text element.)
 
 ```typescript
-let b = Nucleobase.create('A');
-b.domNode.setAttribute('id', 'text-123456');
+nucleobase.domNode.setAttribute('id', 'text-123456');
 
-b.id === 'text-123456'; // true
+nucleobase.id === 'text-123456'; // true
 ```
 
 ## `assignUUID()`
@@ -163,9 +159,7 @@ The assigned UUID might also have some letters prepended to it
 resulting in the assigned UUID having more than 36 characters.
 
 ```typescript
-let b = Nucleobase.create('C');
-
-b.assignUUID();
+nucleobase.assignUUID();
 ```
 
 ## `textContent`
@@ -175,10 +169,7 @@ The text content of the text element that is the nucleobase.
 (More precisely, returns that which is returned by the `textContent` property of the text element.)
 
 ```typescript
-let b = Nucleobase.create('');
-b.domNode.textContent = 'Nucleobase-27';
-
-b.textContent === 'Nucleobase-27'; // true
+nucleobase.domNode.textContent = 'R';
 ```
 
 ## `bbox`
@@ -188,9 +179,7 @@ The bounding box of the text element that is the nucleobase.
 Essentially, just forwards the values returned by the underlying `getBBox` method.
 
 ```typescript
-let b = Nucleobase.create('c');
-
-b.bbox; // a box with X and Y coordinates and width and height
+nucleobase.bbox; // a box with X and Y coordinates and width and height
 ```
 
 ## `centerPoint`
@@ -200,9 +189,8 @@ The center point of the bounding box of the nucleobase.
 Setting this will move the nucleobase.
 
 ```typescript
-let b = Nucleobase.create('T');
-
-b.centerPoint = { x: 92, y: -112 };
+// will recenter the nucleobase at coordinates (92, -112)
+nucleobase.centerPoint = { x: 92, y: -112 };
 ```
 
 ## `getCenterPoint()`
@@ -233,7 +221,7 @@ Note that this definition does not include other changes that might change where
 (e.g., transforms).
 
 ```typescript
-let b = Nucleobase.create('A');
+let listener = () => attachedElement.reposition();
 
-b.addEventListener('move', () => attachedElement.reposition());
+nucleobase.addEventListener('move', listener);
 ```
