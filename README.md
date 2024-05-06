@@ -209,9 +209,17 @@ b.centerPoint = { x: 92, y: -112 };
 
 A simple getter method for the center point of the nucleobase.
 
+```typescript
+nucleobase.getCenterPoint();
+```
+
 ## `setCenterPoint()`
 
 A simple setter method for the center point of the nucleobase.
+
+```typescript
+nucleobase.setCenterPoint({ x: 92, y: 178 });
+```
 
 ## `addEventListener()`
 
