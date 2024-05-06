@@ -191,7 +191,7 @@ The center point of the bounding box of the nucleobase.
 Setting this will move the nucleobase.
 
 ```typescript
-// will recenter the nucleobase at coordinates (92, -112)
+// recenter the nucleobase on point (92, -112)
 nucleobase.centerPoint = { x: 92, y: -112 };
 ```
 
