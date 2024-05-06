@@ -166,7 +166,7 @@ nucleobase.assignUUID();
 
 The text content of the text element that is the nucleobase.
 
-(More precisely, returns that which is returned by the `textContent` property of the text element.)
+(More precisely, returns that which is returned by the `textContent` property of the text element when used as a getter.)
 
 ```typescript
 nucleobase.domNode.textContent = 'R';
