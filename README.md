@@ -6,17 +6,19 @@ With `npm`:
 npm install @rnacanvas/draw.bases
 ```
 
+# Usage
+
+All exports of the package can be accessed as named imports.
+
+```typescript
+import { Nucleobase } from '@rnacanvas/draw.bases';
+```
+
 # Exports
 
 ## `Nucleobase`
 
 The `Nucleobase` class represents a `text` element within an SVG document that is a nucleobase.
-
-To use:
-
-```typescript
-import { Nucleobase } from '@rnacanvas/draw.bases';
-```
 
 ### `static create()`
 
