@@ -170,6 +170,8 @@ The text content of the text element that is the nucleobase.
 
 ```typescript
 nucleobase.domNode.textContent = 'R';
+
+nucleobase.textContent === 'R'; // true
 ```
 
 ## `bbox`
