@@ -2,6 +2,8 @@ import * as SVG from '@svgdotjs/svg.js';
 
 import { assignUUID } from '@rnacanvas/draw.svg';
 
+import { bringToFront, sendToBack } from '@rnacanvas/draw.svg';
+
 import { mean } from '@rnacanvas/math';
 
 /**
@@ -139,6 +141,32 @@ export class Nucleobase {
    */
   hasParent(): boolean {
     return this.domNode.parentNode ? true : false;
+  }
+
+  /**
+   * Makes the text element that is the nucleobase the last child of its immediate parent node.
+   *
+   * Has no effect if the text element that is the nucleobase has no parent node.
+   *
+   * Note that if the immediate parent node is not the root SVG document
+   * (e.g., the nucleobase is in a group), then the nucleobase is only made the last child
+   * of its immediate parent node (and not of the root SVG document).
+   */
+  bringToFront(): void {
+    bringToFront(this.domNode);
+  }
+
+  /**
+   * Makes the text element that is the nucleobase the first child of its immediate parent node.
+   *
+   * Has no effect if the text element that is the nucleobase has no parent node.
+   *
+   * Note that if the immediate parent node is not the root SVG document
+   * (e.g., the nucleobase is in a group), then the nucleobase is only made the first child
+   * of its immediate parent node (and not of the root SVG document).
+   */
+  sendToBack(): void {
+    sendToBack(this.domNode);
   }
 
   /**

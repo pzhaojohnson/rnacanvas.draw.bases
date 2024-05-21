@@ -123,6 +123,43 @@ describe('Nucleobase class', () => {
     expect(b2.hasParent()).toBe(false);
   });
 
+  test('bringToFront method', () => {
+    let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+    let b = Nucleobase.create('A');
+    b.appendTo(svg);
+
+    // add some elements to append after
+    for (let i = 0; i < 5; i++) {
+      svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'circle'));
+    }
+
+    expect(svg.childNodes[0]).toBe(b.domNode);
+
+    b.bringToFront();
+
+    expect(svg.childNodes[5]).toBe(b.domNode);
+    expect(svg.childNodes.length).toBe(6);
+  });
+
+  test('sendToBack method', () => {
+    let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+    // add some elements to prepend before
+    for (let i = 0; i < 10; i++) {
+      svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'));
+    }
+
+    let b = Nucleobase.create('G');
+    b.appendTo(svg);
+
+    expect(svg.childNodes[10]).toBe(b.domNode);
+
+    b.sendToBack();
+
+    expect(svg.childNodes[0]).toBe(b.domNode);
+  });
+
   test('getAttribute method', () => {
     let textElement = createSVGTextElement();
     textElement.setAttribute('fill', '#ff632b');
