@@ -304,6 +304,30 @@ describe('Nucleobase class', () => {
     expect(Number.parseFloat(b.domNode.getAttribute('y'))).toBeCloseTo(0.3718 - 9.25);
   });
 
+  test('maintainingCenterPoint method', () => {
+    let textElement = createSVGTextElement();
+
+    textElement.setAttribute('x', '252');
+    textElement.setAttribute('y', '-801');
+    textElement.setAttribute('font-size', '28');
+
+    textElement.getBBox = () => {
+      let x = Number.parseFloat(textElement.getAttribute('x'));
+      let y = Number.parseFloat(textElement.getAttribute('y'));
+      let width = (2 / 3) * Number.parseFloat(textElement.getAttribute('font-size'));
+      let height = Number.parseFloat(textElement.getAttribute('font-size'));
+      return createDOMRect(x, y, width, height);
+    };
+
+    let b = new Nucleobase(textElement);
+
+    b.maintainingCenterPoint(() => textElement.setAttribute('font-size', '87'));
+
+    // adjusts `x` and `y` attributes to maintain the center point of the nucleobase
+    expect(Number.parseFloat(textElement.getAttribute('x'))).toBeCloseTo(232.33333333333326);
+    expect(Number.parseFloat(textElement.getAttribute('y'))).toBeCloseTo(-830.5);
+  });
+
   test('boundingClientRect getter', () => {
     let textElement = createSVGTextElement();
     textElement.getBoundingClientRect = () => createDOMRect(52.82, 889.23, 501.27, 8003.74);

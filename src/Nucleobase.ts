@@ -253,6 +253,24 @@ export class Nucleobase {
   }
 
   /**
+   * Caches the center point of the nucleobase,
+   * calls the provided callback function,
+   * and then restores the center point of the nucleobase to the cached center point.
+   *
+   * Is useful when making edits to a nucleobase (e.g., changing font attributes and text content)
+   * and one wants to maintain the center point of the nucleobase.
+   */
+  maintainingCenterPoint(callbackFn: () => void): void {
+    // cache the center point
+    let centerPoint = this.centerPoint;
+
+    callbackFn();
+
+    // restore the center point
+    this.centerPoint = centerPoint;
+  }
+
+  /**
    * Returns the bounding client rect of the text element that is the nucleobase
    * (i.e., will return a box with the same values as that returned by the `getBoundingClientRect` method).
    */
