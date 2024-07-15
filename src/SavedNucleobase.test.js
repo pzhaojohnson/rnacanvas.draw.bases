@@ -4,19 +4,25 @@
 
 import { SavedNucleobase } from './SavedNucleobase';
 
+beforeEach(() => {
+  window.SVGTextElement = SVGElement;
+});
+
 class DrawingMock {
-  constructor(elements) {
-    this.elements = elements;
-  }
+  constructor() {
+    this.domNode = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
-  getSVGTextElementWithID(id) {
-    let text = this.elements.find(ele => ele.id === id && ele.tagName === 'text');
-
-    if (!text) {
-      throw new Error(`This drawing does not contain an SVG text element with the ID: ${id}.`);
-    }
-
-    return text;
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'circle'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
   }
 }
 
@@ -30,20 +36,15 @@ describe('SavedNucleobase class', () => {
       let domNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       domNode.id = id;
 
-      let parentDrawing = new DrawingMock([
-        document.createElementNS('http://www.w3.org/2000/svg', 'circle'),
-        document.createElementNS('http://www.w3.org/2000/svg', 'text'),
-        document.createElementNS('http://www.w3.org/2000/svg', 'text'),
-        domNode,
-        document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'),
-      ]);
+      let parentDrawing = new DrawingMock();
+      parentDrawing.domNode.insertBefore(domNode, parentDrawing.domNode.childNodes[4]);
 
       let savedNucleobase = new SavedNucleobase(jsonSerializable, parentDrawing);
 
       expect(savedNucleobase.recreate().domNode).toBe(domNode);
     });
 
-    it('checks if the nucleobase ID has been saved under the property name `textId`', () => {
+    it('checks if the nucleobase ID has been saved under the name `textId`', () => {
       let id = 'id-4287f872f839fu293uf';
 
       let jsonSerializable = { textId: id };
@@ -51,13 +52,8 @@ describe('SavedNucleobase class', () => {
       let domNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       domNode.id = id;
 
-      let parentDrawing = new DrawingMock([
-        document.createElementNS('http://www.w3.org/2000/svg', 'circle'),
-        domNode,
-        document.createElementNS('http://www.w3.org/2000/svg', 'text'),
-        document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'),
-        document.createElementNS('http://www.w3.org/2000/svg', 'text'),
-      ]);
+      let parentDrawing = new DrawingMock();
+      parentDrawing.domNode.insertBefore(domNode, parentDrawing.domNode.childNodes[5]);
 
       let savedNucleobase = new SavedNucleobase(jsonSerializable, parentDrawing);
 
@@ -67,11 +63,17 @@ describe('SavedNucleobase class', () => {
     it('throws if the nucleobase ID was not saved', () => {
       let jsonSerializable = {};
 
-      let parentDrawing = new DrawingMock([
-        document.createElementNS('http://www.w3.org/2000/svg', 'circle'),
-        document.createElementNS('http://www.w3.org/2000/svg', 'text'),
-        document.createElementNS('http://www.w3.org/2000/svg', 'text'),
-      ]);
+      let parentDrawing = new DrawingMock();
+
+      let savedNucleobase = new SavedNucleobase(jsonSerializable, parentDrawing);
+
+      expect(() => savedNucleobase.recreate()).toThrow();
+    });
+
+    it('throws if no DOM node in the drawing has the nucleobase ID', () => {
+      let jsonSerializable = { id: 'id-1984u1982ur928' };
+
+      let parentDrawing = new DrawingMock();
 
       let savedNucleobase = new SavedNucleobase(jsonSerializable, parentDrawing);
 
