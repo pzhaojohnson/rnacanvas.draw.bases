@@ -200,6 +200,26 @@ nucleobase.centerPoint.x = 92;
 nucleobase.centerPoint.y = -112;
 ```
 
+Can be listened to for when it moves.
+
+```javascript
+var listener = () => {};
+
+// arranges for the listener to called whenever the center point of the nucleobase moves
+nucleobase.centerPoint.addEventListener('move', listener);
+
+nucleobase.centerPoint.x += 15;
+listener; // called once
+
+nucleobase.centerPoint.y -= 32;
+listener; // called a second time
+
+nucleobase.centerPoint.removeEventListener('move', listener);
+
+nucleobase.centerPoint.x -= 100;
+listener; // not called a third time
+```
+
 ### `getCenterPoint()`
 
 A simple getter method for the center point of the nucleobase.
@@ -214,21 +234,4 @@ A simple setter method for the center point of the nucleobase.
 
 ```typescript
 nucleobase.setCenterPoint({ x: 92, y: 178 });
-```
-
-### `addEventListener()`
-
-For listening for events on the nucleobase.
-
-#### Listening for move events
-
-Move events are defined as occurring when either the `x` or `y` attributes of the text element that is the nucleobase are changed.
-
-Note that this definition does not include other changes that might change where the nucleobase appears on screen
-(e.g., transforms).
-
-```typescript
-let listener = () => attachedElement.reposition();
-
-nucleobase.addEventListener('move', listener);
 ```
