@@ -192,11 +192,12 @@ nucleobase.bbox; // a box with X and Y coordinates and width and height
 
 The center point of the bounding box of the nucleobase.
 
-Setting this will move the nucleobase.
+Setting its coordinates will move the nucleobase.
 
 ```typescript
 // recenter the nucleobase on point (92, -112)
-nucleobase.centerPoint = { x: 92, y: -112 };
+nucleobase.centerPoint.x = 92;
+nucleobase.centerPoint.y = -112;
 ```
 
 ### `getCenterPoint()`
