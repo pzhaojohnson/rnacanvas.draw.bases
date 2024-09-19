@@ -190,9 +190,9 @@ nucleobase.bbox; // a box with X and Y coordinates and width and height
 
 ### `centerPoint`
 
-The center point of the bounding box of the nucleobase.
+The center point of the nucleobase. (Calculated from its bounding box.)
 
-Setting its coordinates will move the nucleobase.
+Setting its coordinates will recenter the nucleobase.
 
 ```typescript
 // recenter the nucleobase on point (92, -112)
@@ -200,12 +200,13 @@ nucleobase.centerPoint.x = 92;
 nucleobase.centerPoint.y = -112;
 ```
 
-Can be listened to for when it moves.
+Can also be listened to for when it moves.
 
 ```javascript
 var listener = () => {};
 
-// arranges for the listener to called whenever the center point of the nucleobase moves
+// arranges for the listener to be called
+// whenever the center point of the nucleobase changes coordinates
 nucleobase.centerPoint.addEventListener('move', listener);
 
 nucleobase.centerPoint.x += 15;
