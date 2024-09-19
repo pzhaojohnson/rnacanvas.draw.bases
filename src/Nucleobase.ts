@@ -4,6 +4,8 @@ import { assignUUID } from '@rnacanvas/draw.svg';
 
 import { bringToFront, sendToBack } from '@rnacanvas/draw.svg';
 
+import { CenterPoint } from '@rnacanvas/draw.svg.text';
+
 import { mean } from '@rnacanvas/math';
 
 /**
@@ -86,6 +88,11 @@ export class Nucleobase {
     return b;
   }
 
+  /**
+   * The center point of the nucleobase (in the SVG coordinate system).
+   */
+  readonly centerPoint: CenterPoint;
+
   private eventListeners: EventListeners = {
     'move': [],
   };
@@ -97,6 +104,8 @@ export class Nucleobase {
    * @param textElement The text element that is the nucleobase.
    */
   constructor(private textElement: SVGTextElement) {
+    this.centerPoint = new CenterPoint(textElement);
+
     let movementObserver = new MutationObserver(() => this.callEventListeners('move'));
     movementObserver.observe(textElement, { attributes: true, attributeFilter: ['x', 'y'] });
   }
@@ -231,25 +240,13 @@ export class Nucleobase {
     return this.domNode.getBBox();
   }
 
-  /**
-   * The center point of the nucleobase (in the coordinate system of its parent SVG document).
-   */
-  get centerPoint(): Point {
-    let { cx, cy } = (new SVG.Text(this.domNode)).bbox();
-
-    return { x: cx, y: cy };
-  }
-
-  set centerPoint(p) {
-    (new SVG.Text(this.domNode)).center(p.x, p.y);
-  }
-
   getCenterPoint() {
     return this.centerPoint;
   }
 
   setCenterPoint(p: Point): void {
-    this.centerPoint = p;
+    this.centerPoint.x = p.x;
+    this.centerPoint.y = p.y;
   }
 
   /**
@@ -261,13 +258,14 @@ export class Nucleobase {
    * and one wants to maintain the center point of the nucleobase.
    */
   maintainingCenterPoint(callbackFn: () => void): void {
-    // cache the center point
-    let centerPoint = this.centerPoint;
+    // cache center point coordinates
+    let { x, y } = this.centerPoint;
 
     callbackFn();
 
     // restore the center point
-    this.centerPoint = centerPoint;
+    this.centerPoint.x = x;
+    this.centerPoint.y = y;
   }
 
   /**

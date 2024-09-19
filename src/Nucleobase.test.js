@@ -259,28 +259,6 @@ describe('Nucleobase class', () => {
     expect([x, y, width, height]).toStrictEqual([-57.2, 88.4, 901.73, 1129.4]);
   });
 
-  test('centerPoint getter', () => {
-    let textElement = createSVGTextElement();
-    textElement.getBBox = () => createDOMRect(45, 82, 18, 33);
-
-    let b = new Nucleobase(textElement);
-
-    expect(b.centerPoint.x).toBeCloseTo(54);
-    expect(b.centerPoint.y).toBeCloseTo(98.5);
-  });
-
-  test('centerPoint setter', () => {
-    let textElement = createSVGTextElement();
-    textElement.getBBox = () => createDOMRect(0, 0, 22.3, 84);
-
-    let b = new Nucleobase(textElement);
-
-    b.centerPoint = { x: -6471.387, y: 38197.332 };
-
-    expect(Number.parseFloat(b.domNode.getAttribute('x'))).toBeCloseTo(-6471.387 - (22.3 / 2));
-    expect(Number.parseFloat(b.domNode.getAttribute('y'))).toBeCloseTo(38197.332 - (84 / 2));
-  });
-
   test('getCenterPoint method', () => {
     let textElement = createSVGTextElement();
 
@@ -294,7 +272,11 @@ describe('Nucleobase class', () => {
 
   test('setCenterPoint method', () => {
     let textElement = createSVGTextElement();
+
     textElement.getBBox = () => createDOMRect(0, 0, 12, 18.5);
+
+    textElement.x = { baseVal: [{ value: 0 }] };
+    textElement.y = { baseVal: [{ value: 0 }] };
 
     let b = new Nucleobase(textElement);
 
@@ -318,6 +300,9 @@ describe('Nucleobase class', () => {
       let height = Number.parseFloat(textElement.getAttribute('font-size'));
       return createDOMRect(x, y, width, height);
     };
+
+    textElement.x = { baseVal: [{ value: 252 }] };
+    textElement.y = { baseVal: [{ value: -801 }] };
 
     let b = new Nucleobase(textElement);
 
