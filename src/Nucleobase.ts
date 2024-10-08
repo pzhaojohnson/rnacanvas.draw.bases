@@ -249,7 +249,7 @@ export class Nucleobase {
    * The center point of the nucleobase in the client coordinate system
    * (i.e., the same coordinate system used by methods such as `getBoundingClientRect`).
    */
-  get centerClientPoint(): Point {
+  get clientCenterPoint(): Point {
     let boundingClientRect = this.domNode.getBoundingClientRect();
 
     return {
@@ -258,7 +258,7 @@ export class Nucleobase {
     };
   }
 
-  getCenterClientPoint() {
-    return this.centerClientPoint;
+  getClientCenterPoint() {
+    return this.clientCenterPoint;
   }
 }

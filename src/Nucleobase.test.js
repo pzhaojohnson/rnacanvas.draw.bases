@@ -323,23 +323,23 @@ describe('Nucleobase class', () => {
     expect([x, y, width, height]).toStrictEqual([52.82, 889.23, 501.27, 8003.74]);
   });
 
-  test('centerClientPoint getter', () => {
+  test('clientCenterPoint getter', () => {
     let textElement = createSVGTextElement();
     textElement.getBoundingClientRect = () => createDOMRect(316, 601, 36, 23);
 
     let b = new Nucleobase(textElement);
 
-    expect(b.centerClientPoint.x).toBeCloseTo((316 + 352) / 2);
-    expect(b.centerClientPoint.y).toBeCloseTo((601 + 624) / 2);
+    expect(b.clientCenterPoint.x).toBeCloseTo((316 + 352) / 2);
+    expect(b.clientCenterPoint.y).toBeCloseTo((601 + 624) / 2);
   });
 
-  test('getCenterClientPoint method', () => {
+  test('getClientCenterPoint method', () => {
     let textElement = createSVGTextElement();
     textElement.getBoundingClientRect = () => createDOMRect(-58, 211, 17, 19);
 
     let b = new Nucleobase(textElement);
 
-    expect(b.getCenterClientPoint().x).toBeCloseTo(((-58) + (-41)) / 2);
-    expect(b.getCenterClientPoint().y).toBeCloseTo((211 + 230) / 2);
+    expect(b.getClientCenterPoint().x).toBeCloseTo(((-58) + (-41)) / 2);
+    expect(b.getClientCenterPoint().y).toBeCloseTo((211 + 230) / 2);
   });
 });
