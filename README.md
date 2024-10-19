@@ -16,7 +16,7 @@ import { Nucleobase } from '@rnacanvas/draw.bases';
 
 ## `Nucleobase`
 
-The `Nucleobase` class represents a `text` element within an SVG document that is a nucleobase.
+The `Nucleobase` class wraps an SVG `text` element.
 
 ### `static create()`
 
