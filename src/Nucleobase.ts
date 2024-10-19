@@ -100,17 +100,10 @@ export class Nucleobase {
    * Note that this constructor will not modify the input text element in any way
    * (e.g., won't set attributes to default values).
    *
-   * @param textElement The text element that is the nucleobase.
+   * @param domNode The DOM node corresponding to the nucleobase.
    */
-  constructor(private textElement: SVGTextElement) {
-    this.centerPoint = new CenterPoint(textElement);
-  }
-
-  /**
-   * The actual DOM node of the text element that is the nucleobase.
-   */
-  get domNode() {
-    return this.textElement;
+  constructor(readonly domNode: SVGTextElement) {
+    this.centerPoint = new CenterPoint(domNode);
   }
 
   /**
