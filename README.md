@@ -236,3 +236,34 @@ A simple setter method for the center point of the nucleobase.
 ```typescript
 nucleobase.setCenterPoint({ x: 92, y: 178 });
 ```
+
+### `serialized()`
+
+Returns the serialized form of the nucleobase
+(e.g., that can be converted to a JSON string),
+which is used when saving drawings.
+
+```javascript
+var b = Nucleobase.create('G');
+b.domNode.id = 'id-123456';
+
+b.serialized(); // { id: "id-123456" }
+```
+
+### `static deserialized()`
+
+Recreates a saved nucleobase from its serialized form.
+
+Note that this method does not create any new DOM nodes
+(it simply retrieves the corresponding DOM node for the saved nucleobase
+from its parent drawing).
+
+```javascript
+var parentDrawing; // an RNAcanvas drawing
+
+var b1 = parentDrawing.addBase('A');
+b1.domNode.id = 'id-ABCDEF';
+
+var b2 = Nucleobase.deserialized(b1.serialized(), parentDrawing);
+b2.domNode.id; // "id-ABCDEF"
+```
