@@ -266,4 +266,7 @@ b1.domNode.id = 'id-ABCDEF';
 
 var b2 = Nucleobase.deserialized(b1.serialized(), parentDrawing);
 b2.domNode.id; // "id-ABCDEF"
+
+b2.domNode === b1.domNode; // true
+b2 === b1; // false
 ```
