@@ -2,6 +2,10 @@ import * as SVG from '@svgdotjs/svg.js';
 
 import { assignUUID } from '@rnacanvas/draw.svg';
 
+import { isNonNullObject } from '@rnacanvas/value-check';
+
+import { isString } from '@rnacanvas/value-check';
+
 import { bringToFront, sendToBack } from '@rnacanvas/draw.svg';
 
 import { CenterPoint } from '@rnacanvas/draw.svg.text';
@@ -65,6 +69,29 @@ export class Nucleobase {
   }
 
   /**
+   * Recreates a saved nucleobase.
+   *
+   * Throws if unable to do so.
+   *
+   * @param savedBase The serialized form of the saved nucleobase.
+   * @param parentDrawing The drawing that the saved nucleobase is in.
+   */
+  static deserialized(savedBase: unknown, parentDrawing: { domNode: SVGSVGElement }): Nucleobase | never {
+    if (!isNonNullObject(savedBase)) { throw new Error('Saved base must be an object.'); }
+
+    // base IDs used to be saved as `textId`
+    let id = savedBase.id ?? savedBase.textId;
+    if (!id) { throw new Error('Missing base ID.'); }
+    if (!isString(id)) { throw new Error('Base IDs must be strings.'); }
+
+    let domNode = parentDrawing.domNode.querySelector('#' + id);
+    if (!domNode) { throw new Error('Unable to find nucleobase DOM node.'); }
+    if (!(domNode instanceof SVGTextElement)) { throw new Error('Nucleobase DOM node must be an SVG text element.'); }
+
+    return new Nucleobase(domNode);
+  }
+
+  /**
    * The center point of the nucleobase (in the SVG coordinate system).
    */
   readonly centerPoint: CenterPoint;
@@ -84,6 +111,18 @@ export class Nucleobase {
    */
   get domNode() {
     return this.textElement;
+  }
+
+  /**
+   * Returns the serialized form of the nucleobase,
+   * which is used when saving drawings.
+   *
+   * Throws if the nucleobase ID is falsy.
+   */
+  serialized() {
+    if (!this.id) { throw new Error('Nucleobase ID is falsy.'); }
+
+    return { id: this.id };
   }
 
   /**

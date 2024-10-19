@@ -52,6 +52,28 @@ describe('Nucleobase class', () => {
     });
   });
 
+  test('`deserialized()` method', () => {
+    let b1 = Nucleobase.create('c');
+    b1.domNode.id = 'id-907191287422';
+
+    let parentDrawing = new DrawingMock();
+    expect(parentDrawing.domNode.childNodes.length).toBeGreaterThanOrEqual(6);
+    parentDrawing.domNode.insertBefore(b1.domNode, parentDrawing.domNode.childNodes[4]);
+
+    // `SVGTextElement` is not defined by default by JSDOM
+    expect(globalThis.SVGTextElement).toBeFalsy();
+    globalThis.SVGTextElement = SVGElement;
+
+    let b2 = Nucleobase.deserialized(b1.serialized(), parentDrawing);
+    expect(b2.domNode).toBe(b1.domNode);
+    expect(b2.domNode).toBeTruthy();
+
+    // base IDs used to be saved as `textId`
+    let b3 = Nucleobase.deserialized({ textId: 'id-907191287422' }, parentDrawing);
+    expect(b3.domNode).toBe(b1.domNode);
+    expect(b3.domNode).toBeTruthy();
+  });
+
   test('domNode getter', () => {
     let textElement = createSVGTextElement();
 
@@ -59,6 +81,16 @@ describe('Nucleobase class', () => {
 
     expect(b.domNode).toBe(textElement);
     expect(textElement).toBeTruthy();
+  });
+
+  test('`serialized()` method', () => {
+    let b = Nucleobase.create('C');
+
+    b.domNode.id = 'id-47916281974';
+    expect(b.serialized()).toStrictEqual({ id: 'id-47916281974' });
+
+    b.domNode.id = '';
+    expect(() => b.serialized()).toThrow();
   });
 
   describe('appendTo method', () => {
@@ -343,3 +375,21 @@ describe('Nucleobase class', () => {
     expect(b.getClientCenterPoint().y).toBeCloseTo((211 + 230) / 2);
   });
 });
+
+class DrawingMock {
+  constructor() {
+    this.domNode = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'circle'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
+    this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+  }
+}
