@@ -1,7 +1,7 @@
 {
   "name": "@rnacanvas/draw.bases",
-  "version": "9.0.0",
-  "description": "Draw nucleobases",
+  "version": "9.0.1",
+  "description": "Draw bases",
   "repository": {
     "type": "git",
     "url": "https://github.com/pzhaojohnson/rnacanvas.draw.bases.git"
