@@ -239,7 +239,7 @@ nucleobase.setCenterPoint({ x: 92, y: 178 });
 
 ### `serialized()`
 
-Returns the serialized form of the nucleobase
+Returns the serialized form of a nucleobase
 (e.g., that can be converted to a JSON string),
 which is used when saving drawings.
 
@@ -255,8 +255,8 @@ b.serialized(); // { id: "id-123456" }
 Recreates a saved nucleobase from its serialized form.
 
 Note that this method does not create any new DOM nodes
-(it simply retrieves the corresponding DOM node for the saved nucleobase
-from its parent drawing).
+(it simply retrieves the corresponding DOM node for a saved nucleobase
+from within its parent drawing).
 
 ```javascript
 var parentDrawing; // an RNAcanvas drawing
