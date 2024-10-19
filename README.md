@@ -14,8 +14,6 @@ All exports of the package can be accessed as named imports.
 import { Nucleobase } from '@rnacanvas/draw.bases';
 ```
 
-# Exports
-
 ## `Nucleobase`
 
 The `Nucleobase` class represents a `text` element within an SVG document that is a nucleobase.
