@@ -256,7 +256,7 @@ Recreates a saved nucleobase from its serialized form.
 
 Note that this method does not create any new DOM nodes
 (it simply retrieves the corresponding DOM node for a saved nucleobase
-from within its parent drawing).
+from within the parent drawing).
 
 ```javascript
 var parentDrawing; // an RNAcanvas drawing
