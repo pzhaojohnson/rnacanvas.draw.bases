@@ -281,6 +281,41 @@ describe('Nucleobase class', () => {
     expect(textElement.textContent).toBe('d8238fDFJIWef ijsoifwe');
   });
 
+  test('`isA()`', () => {
+    expect(Nucleobase.create('A').isA()).toBe(true);
+    expect(Nucleobase.create('a').isA()).toBe(true);
+    expect(Nucleobase.create('U').isA()).toBe(false);
+    expect(Nucleobase.create('g').isA()).toBe(false);
+  });
+
+  test('`isU()`', () => {
+    expect(Nucleobase.create('U').isU()).toBe(true);
+    expect(Nucleobase.create('u').isU()).toBe(true);
+    expect(Nucleobase.create('C').isU()).toBe(false);
+    expect(Nucleobase.create('a').isU()).toBe(false);
+  });
+
+  test('`isT()`', () => {
+    expect(Nucleobase.create('T').isT()).toBe(true);
+    expect(Nucleobase.create('t').isT()).toBe(true);
+    expect(Nucleobase.create('G').isT()).toBe(false);
+    expect(Nucleobase.create('a').isT()).toBe(false);
+  });
+
+  test('`isG()`', () => {
+    expect(Nucleobase.create('G').isG()).toBe(true);
+    expect(Nucleobase.create('g').isG()).toBe(true);
+    expect(Nucleobase.create('A').isG()).toBe(false);
+    expect(Nucleobase.create('c').isG()).toBe(false);
+  });
+
+  test('`isC()`', () => {
+    expect(Nucleobase.create('C').isC()).toBe(true);
+    expect(Nucleobase.create('c').isC()).toBe(true);
+    expect(Nucleobase.create('U').isC()).toBe(false);
+    expect(Nucleobase.create('t').isC()).toBe(false);
+  });
+
   test('bbox getter', () => {
     let textElement = createSVGTextElement();
     textElement.getBBox = () => createDOMRect(-57.2, 88.4, 901.73, 1129.4);

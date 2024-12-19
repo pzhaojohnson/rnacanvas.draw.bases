@@ -235,6 +235,41 @@ export class Nucleobase {
   }
 
   /**
+   * Returns true if and only if the text content of the base is "A" or "a".
+   */
+  isA(): boolean {
+    return this.textContent?.toUpperCase() === 'A';
+  }
+
+  /**
+   * Returns true if and only if the text content of the base is "U" or "u".
+   */
+  isU(): boolean {
+    return this.textContent?.toUpperCase() === 'U';
+  }
+
+  /**
+   * Returns true if and only if the text content of the base is "T" or "t".
+   */
+  isT(): boolean {
+    return this.textContent?.toUpperCase() === 'T';
+  }
+
+  /**
+   * Returns true if and only if the text content of the base is "G" or "g".
+   */
+  isG(): boolean {
+    return this.textContent?.toUpperCase() === 'G';
+  }
+
+  /**
+   * Returns true if and only if the text content of the base is "C" or "c".
+   */
+  isC(): boolean {
+    return this.textContent?.toUpperCase() === 'C';
+  }
+
+  /**
    * Returns the bounding box of the text element that is the nucleobase.
    */
   get bbox(): Box {
