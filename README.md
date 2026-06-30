@@ -235,6 +235,55 @@ A simple setter method for the center point of the nucleobase.
 nucleobase.setCenterPoint({ x: 92, y: 178 });
 ```
 
+### `addEventListener()`
+
+Listen for any changes to a nucleobase.
+
+```javascript
+var drawing = new Drawing();
+
+document.body.append(drawing.domNode);
+
+var b = Nucleobase.create('A');
+
+drawing.domNode.append(b.domNode);
+
+var count = 0;
+
+b.addEventListener('change', () => count += 1);
+
+// move the base
+b.centerPoint.x += 10;
+
+count; // 1
+
+// modify the text content
+b.textContent = 'asdf';
+
+count; // 2
+
+// modify an attribute
+b.domNode.setAttribute('fill', '#abc123');
+
+count; // 3
+```
+
+### `removeEventListener()`
+
+Stop listening for changes to a nucleobase.
+
+```javascript
+var b = Nucleobase.create('A');
+
+var listener = () => {};
+
+// listen for changes
+b.addEventListener('change', listener);
+
+// stop listening for changes
+b.removeEventListener('change', listener);
+```
+
 ### `serialized()`
 
 Returns the serialized form of a nucleobase
