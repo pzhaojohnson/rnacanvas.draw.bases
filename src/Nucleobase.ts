@@ -97,6 +97,17 @@ export class Nucleobase {
   readonly centerPoint: CenterPoint;
 
   /**
+   * Watches for any changes to the DOM node that is the nucleobase.
+   */
+  readonly #changeObserver;
+
+  readonly #eventListeners: {
+    'change': (() => void)[],
+  } = {
+    'change': [],
+  };
+
+  /**
    * Note that this constructor will not modify the input text element in any way
    * (e.g., won't set attributes to default values).
    *
@@ -104,6 +115,10 @@ export class Nucleobase {
    */
   constructor(readonly domNode: SVGTextElement) {
     this.centerPoint = new CenterPoint(domNode);
+
+    this.#changeObserver = new MutationObserver(() => this.#callEventListeners('change'));
+
+    this.#changeObserver.observe(domNode, { attributes: true, childList: true, characterData: true, subtree: true });
   }
 
   /**
@@ -327,5 +342,20 @@ export class Nucleobase {
 
   getClientCenterPoint() {
     return this.clientCenterPoint;
+  }
+
+  /**
+   * Listen for any changes to the nucleobase.
+   */
+  addEventListener(name: 'change', listener: () => void): void {
+    this.#eventListeners[name].push(listener);
+  }
+
+  removeEventListener(name: 'change', listener: () => void): void {
+    this.#eventListeners[name] = this.#eventListeners[name].filter(li => li !== listener);
+  }
+
+  #callEventListeners(name: 'change'): void {
+    this.#eventListeners[name].forEach(listener => listener());
   }
 }

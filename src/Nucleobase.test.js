@@ -409,6 +409,68 @@ describe('Nucleobase class', () => {
     expect(b.getClientCenterPoint().x).toBeCloseTo(((-58) + (-41)) / 2);
     expect(b.getClientCenterPoint().y).toBeCloseTo((211 + 230) / 2);
   });
+
+  test('`addEventListener()`', async () => {
+    var drawing = new DrawingMock();
+
+    document.body.append(drawing.domNode);
+
+    var b = Nucleobase.create('A');
+    drawing.domNode.append(b.domNode);
+
+    var listeners = [1, 2, 3].map(() => jest.fn());
+    listeners.forEach(li => b.addEventListener('change', li));
+
+    listeners.forEach(li => expect(li).not.toHaveBeenCalled());
+
+    // modify an attribute
+    b.domNode.setAttribute('fill', '#bb8327');
+    await wait(50);
+
+    listeners.forEach(li => expect(li).toHaveBeenCalledTimes(1));
+
+    // modify child tree
+    b.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'tspan'));
+    await wait(50);
+
+    listeners.forEach(li => expect(li).toHaveBeenCalledTimes(2));
+
+    // modify text content
+    b.domNode.childNodes[0].textContent = 'asdf';
+    await wait(50);
+
+    listeners.forEach(li => expect(li).toHaveBeenCalledTimes(3));
+  });
+
+  test('`removeEventListener()`', async () => {
+    var drawing = new DrawingMock();
+
+    document.body.append(drawing.domNode);
+
+    var b = Nucleobase.create('A');
+    drawing.domNode.append(b.domNode);
+
+    var listeners = [1, 2, 3].map(() => jest.fn());
+    listeners.forEach(li => b.addEventListener('change', li));
+
+    listeners.forEach(li => expect(li).not.toHaveBeenCalled());
+
+    // modify the bases
+    b.domNode.setAttribute('fill', '#bb8327');
+    await wait(50);
+
+    listeners.forEach(li => expect(li).toHaveBeenCalledTimes(1));
+
+    // remove event listeners
+    listeners.forEach(li => b.removeEventListener('change', li));
+
+    // modify the base again
+    b.domNode.setAttribute('fill', '#abc123');
+    await wait(50);
+
+    // weren't called again
+    listeners.forEach(li => expect(li).toHaveBeenCalledTimes(1));
+  });
 });
 
 class DrawingMock {
@@ -427,4 +489,10 @@ class DrawingMock {
     this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
     this.domNode.append(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
   }
+}
+
+async function wait(milliseconds) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(), milliseconds);
+  });
 }
